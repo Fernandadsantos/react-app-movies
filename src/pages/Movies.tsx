@@ -1,8 +1,5 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,8 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { api, ROOT_IMAGE } from '../api/axios';
-import { useNavigate } from 'react-router-dom';
-import { Genre } from '../interfaces';
+import { useLocation } from 'react-router-dom';
+import { Breadcrumbs } from '@material-ui/core';
+import { Genre, Movie } from '../interfaces';
+import MovieDetails from '../components/Movie';
 
 
 function Copyright() {
@@ -61,71 +60,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface formattedGenre extends Genre{
-  cover?: string;
-  defaultImage?: string;
-}
 
 
-/*
-navigate({rota},{
-  state: {
-    dados para passar
-  }
-})
-
-*/
-
-
-export default function Album() {
+export default function Movies() {
   const classes = useStyles();
-  const navigate = useNavigate();
-  const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
+  const [listMovies, setListMovies] = React.useState<Movie[]>([]);
+  const [currentCategory, setCurrentCategory] = React.useState<Genre>({} as Genre);
+  const params = useLocation();
 
   React.useEffect(() => {
-    getGenresAndFormtting()
-  }, [])
+    const { state: { id, name} } = params;
+    setCurrentCategory({ id, name})
+    getPopularMoviesByGenreId(id);
+  }, [params])
 
-  async function getGenresAndFormtting() {
-    const { data: { genres } } = await api
-      .get("/genre/movie/list?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
-
-
+  async function getPopularMoviesByGenreId(genreId: number) {
     const { data: { results } } = await api
       .get("/movie/popular?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
 
-    
-    const formattedGenres = genres.map(({ id, name }: Genre) => {
-      const foundMovieByGenre = results.find((movie: any) => movie.genre_ids.find((genreId: number) => genreId === id))
-      return {
-        id,
-        name,
-        cover: foundMovieByGenre?.backdrop_path,
-        defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2m5BZfIh54NvdcU3dU1RSoUMs8lDbJbjsgA&usqp=CAU"
-      }
-    })
-
-    console.log("formattedGenres", formattedGenres)
-    setListFormattedGenres(formattedGenres)
+    const filteredMovies = results.filter((movie: any) => movie.genre_ids.includes(genreId));
+    setListMovies(filteredMovies);
   }
-
-  function goToMoviesList(id: number, name: string) {
-
-    navigate("/movies",
-      {
-        state: {
-          id,
-          name
-        }
-      }
-    )
-
-    
-  }
-
 
   return (
     <React.Fragment>
+
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
@@ -134,35 +93,37 @@ export default function Album() {
           </Typography>
         </Toolbar>
       </AppBar>
+            <Breadcrumbs aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" href='/'>
+          Catalogo
+        </Link>
+        <Link
+          underline="hover"
+          color="inherit"
+          href="/movies"
+        >
+          Movies
+        </Link>
+      </Breadcrumbs>
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <Typography component="h2" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Catalog
+            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+               {currentCategory?.name}
             </Typography>
-            <Typography component='input' className="search-input">
-            </Typography>
+            {/* <div className='search-div'>
+              <img src="./lupa.png" alt="" className='search-logo' width={25} height={25} />
+              <input className='search-input' />
+            </div> */}
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {listFormattedGenres.map((genre) => (
-              <Grid item key={genre.id} xs={12} sm={6} md={4}>
-                <Card className={classes.card} onClick={() => goToMoviesList(genre.id, genre.name)}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={genre.cover ? ROOT_IMAGE + genre.cover : genre.defaultImage}
-                    title={genre.name}
-                    
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <h2 className='genre-title'>
-                      <span >{genre.name}</span>
-                    </h2>
-                  </CardContent>
-                </Card>
+            {listMovies.map((movie) => (
+              <Grid item key={movie.id} xs={12} sm={6} md={4}>
+                <MovieDetails movie={movie} />
               </Grid>
             ))}
           </Grid>

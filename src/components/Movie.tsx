@@ -1,29 +1,18 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import { createTheme, makeStyles } from '@material-ui/core/styles';
 import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import Modal from 'react-modal';
 import { Movie, IMovieDetails } from '../interfaces';
 import { Card, CardMedia, CardContent } from '@material-ui/core';
 import { ROOT_IMAGE, api } from '../api/axios';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { checkIfSinopse, errorMessages, maxText } from '../utils/format';
-import { Style } from '@material-ui/icons';
-
+import CustomSlider from '../components/slider';
+import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 
 const theme = createTheme();
 
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-}
 
 const useStyles = makeStyles(() => ({
     icon: {
@@ -63,8 +52,16 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
     const [details, setDetails] = React.useState<IMovieDetails>({} as IMovieDetails)
     const [recommendations, setRecommendations] = React.useState<Movie[]>([]);
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const slideSettings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 2,
+        autoplay: true,
+        nextArrow: <ArrowCircleRightIcon color='primary' />,
+        prevArrow: <ArrowCircleLeftIcon color='primary' />
+    }
 
 
     function checkSinopseMovie(overview: string | null | undefined) {
@@ -77,9 +74,6 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
 
     }
 
-    React.useEffect(() => {
-        getDetails()
-    }, [])
 
     async function getDetails() {
         const { data } = await api
@@ -92,65 +86,117 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
         setRecommendations(results);
     }
 
+    React.useEffect(() => {
+        getDetails()
+    }, [])
+
     return (
 
-        <React.Fragment>
+        <React.Fragment >
             <CssBaseline />
             <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                isOpen={open}
+                style={
+                    {
+                        overlay: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        }, content: {
+                            width: 500,
+                            padding: 40,
+
+                            backgroundColor: '#d8d8d8',
+                            margin: "auto",
+                            marginTop: 50,
+                        },
+                    }}
+
+                contentLabel={movie.title}
+
+                id={movie.id.toString()}
+
+                onRequestClose={() => setOpen(false)}
+                ariaHideApp={
+                    true}
+
+                shouldFocusAfterRender={
+                    true}
+
+                shouldCloseOnOverlayClick={
+                    true}
+
+                shouldCloseOnEsc={
+                    true}
+
+                shouldReturnFocusAfterClose={
+                    true}
+
+                role={"dialog"}
+
+                preventScroll={false}
+
+
             >
-                <Box sx={modalStyle}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        {movie.title}
-                    </Typography>
-                    <img src={ROOT_IMAGE + movie.poster_path} style={{ objectFit: 'contain' }} alt="" width={300} height={400} />
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                <div style={{flexDirection:'row'}} >
+                    <div> 
+                         <Typography variant="h6" component="h2">
+                            {movie.title}
+                        </Typography>
+                        <img src={ROOT_IMAGE + movie.poster_path} style={{ objectFit: 'contain' }} alt="" width={300} height={400} />
+                    </div>
+                    <div>
+                    <Typography sx={{ mt: 2 }}>
                         Titulo original: {details?.original_title}
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Typography sx={{ mt: 2 }}>
                         Sinopse: {details?.overview}
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Typography sx={{ mt: 2 }}>
                         Linguagem original:  {details?.original_language}
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <Typography sx={{ mt: 2 }}>
                         Data de lançamento: {details?.release_date}
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Avaliação: {details?.vote_average} &#11088;
+                    <Typography sx={{ mt: 2 }}>
+                        Avaliação: {details?.vote_average?.toFixed(1)} &#11088;
                     </Typography>
-                    <Card className={classes.card} onClick={handleOpen}>
-                        <CardMedia
-                            className={classes.cardMedia}
-                            image={ROOT_IMAGE + movie.backdrop_path} 
-                           
-                        />
-                        <CardContent className={classes.cardContent}>
-                            <h2 className='genre-title'>
-                                
-                            </h2>
-                        </CardContent>
-                    </Card>
-                </Box>
+                    </div>
+                    <CustomSlider {...slideSettings}
+                    >
+                        {
+                            recommendations.map((movie) => (
+
+                                <div>
+                                    <img src={ROOT_IMAGE + movie.poster_path} alt="" className='movieList' />
+                                    <p className='movieTitleRecommendation'>
+                                        {movie.title}
+                                    </p>
+                                </div>
+
+                            ))
+                        }
+
+                    </CustomSlider>
+                </div>
+
             </Modal>
-            <Card className={classes.card} onClick={handleOpen}>
-                <CardMedia
-                    className={classes.cardMedia}
-                    image={ROOT_IMAGE + movie.backdrop_path}
-                    title={movie.title}
-                />
-                <CardContent className={classes.cardContent}>
-                    <h2 className='genre-title'>
-                        <span>{movie.title}</span>
-                    </h2>
-                    <Typography component='h3'>
-                        <p>{checkSinopseMovie(movie.overview)}</p>
-                    </Typography>
-                </CardContent>
-            </Card>
-        </React.Fragment>
+            <div className='cardMovie'>
+                <Card className={classes.card} onClick={() => setOpen(true)}>
+                    <CardMedia
+                        className={classes.cardMedia}
+                        image={ROOT_IMAGE + movie.backdrop_path}
+                        title={movie.title}
+
+                    />
+                    <CardContent className={classes.cardContent} >
+                        <h2>
+                            <span>{movie.title}</span>
+                        </h2>
+                        <Typography component='h3'>
+                            <p>{checkSinopseMovie(movie.overview)}</p>
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </div>
+        </React.Fragment >
     )
 }

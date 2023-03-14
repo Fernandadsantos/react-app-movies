@@ -13,7 +13,9 @@ import Link from '@material-ui/core/Link';
 import { api, ROOT_IMAGE } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { Genre } from '../../interfaces';
+import glass from '../../assets/glass.png'
 import './genres.scss'
+
 
 
 function Copyright() {
@@ -82,6 +84,7 @@ export default function Album() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
+  const [search, setSearch] = React.useState();
 
   React.useEffect(() => {
     getGenresAndFormtting()
@@ -108,8 +111,13 @@ export default function Album() {
 
     console.log("formattedGenres", formattedGenres)
     setListFormattedGenres(formattedGenres)
+    setSearch(formattedGenres)
   }
 
+  function searchCategoty (search: Genre, categoryInput: string){
+
+    
+  }
   function goToMoviesList(id: number, name: string) {
 
     navigate("/movies",
@@ -131,7 +139,7 @@ export default function Album() {
       <AppBar position="relative">
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Movie Catalog
+            Catalogo de filmes
           </Typography>
         </Toolbar>
       </AppBar>
@@ -140,10 +148,12 @@ export default function Album() {
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h2" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Catalog
+              Catalogo
             </Typography>
-            <Typography component='input' className="search-input">
-            </Typography>
+            <div className='search-container'>
+              <button className='search-btn'><img src={glass} alt="" className='search-icon'/></button>
+              <input onChange={} type="text" className='search-input' />
+            </div>
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">

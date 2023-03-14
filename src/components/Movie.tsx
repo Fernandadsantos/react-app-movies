@@ -10,6 +10,7 @@ import { checkIfSinopse, errorMessages, maxText } from '../utils/format';
 import CustomSlider from '../components/slider';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import imageAlternative from '../assets/cinemaImg.jpeg'
 
 const theme = createTheme();
 
@@ -63,7 +64,7 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
         prevArrow: <ArrowCircleLeftIcon color='primary' />
     }
 
-
+    const defaultImage = ''
     function checkSinopseMovie(overview: string | null | undefined) {
 
         if (!checkIfSinopse(overview)) {
@@ -165,8 +166,8 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
                         {
                             recommendations.map((movie) => (
 
-                                <div>
-                                    <img src={ROOT_IMAGE + movie.poster_path} alt="" className='movieList' />
+                                <div> 
+                                    <img src={movie?.poster_path ? ROOT_IMAGE + movie?.poster_path : imageAlternative} className='movieList' />
                                     <p className='movieTitleRecommendation'>
                                         {movie.title}
                                     </p>

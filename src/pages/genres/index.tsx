@@ -84,7 +84,7 @@ export default function Album() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
-  const [search, setSearch] = React.useState();
+  const [listGenres, setListGenres] = React.useState<Genre[]>([]);
 
   React.useEffect(() => {
     getGenresAndFormtting()
@@ -108,13 +108,15 @@ export default function Album() {
         defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2m5BZfIh54NvdcU3dU1RSoUMs8lDbJbjsgA&usqp=CAU"
       }
     })
-
-    console.log("formattedGenres", formattedGenres)
+ 
     setListFormattedGenres(formattedGenres)
-    setSearch(formattedGenres)
+    setListGenres(formattedGenres) 
   }
 
-  function searchCategoty (search: Genre, categoryInput: string){
+  function searchCategory ({target}: any){ 
+    const searchTerm = target.value as string;
+    const resultSearch = listGenres.filter((category: Genre) => category.name.toLocaleUpperCase().includes(searchTerm.toLocaleUpperCase()));
+    console.log(resultSearch)
 
     
   }
@@ -152,7 +154,7 @@ export default function Album() {
             </Typography>
             <div className='search-container'>
               <button className='search-btn'><img src={glass} alt="" className='search-icon'/></button>
-              <input onChange={} type="text" className='search-input' />
+              <input onChange={searchCategory} type="text" className='search-input' />
             </div>
           </Container>
         </div>

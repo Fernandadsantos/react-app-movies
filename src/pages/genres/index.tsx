@@ -116,9 +116,9 @@ export default function Album() {
   function searchCategory ({target}: any){ 
     const searchTerm = target.value as string;
     const resultSearch = listGenres.filter((category: Genre) => category.name.toLocaleUpperCase().includes(searchTerm.toLocaleUpperCase()));
-    console.log(resultSearch)
 
-    
+    setListFormattedGenres(resultSearch);
+
   }
   function goToMoviesList(id: number, name: string) {
 

@@ -64,7 +64,6 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
         prevArrow: <ArrowCircleLeftIcon color='primary' />
     }
 
-    const defaultImage = ''
     function checkSinopseMovie(overview: string | null | undefined) {
 
         if (!checkIfSinopse(overview)) {

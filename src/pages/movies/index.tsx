@@ -7,12 +7,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import { api, ROOT_IMAGE } from '../../api/axios';
+import { api} from '../../api/axios';
 import { useLocation } from 'react-router-dom';
 import { Breadcrumbs } from '@material-ui/core';
 import { Genre, Movie } from '../../interfaces';
 import MovieDetails from '../../components/Movie';
 import './movies.scss'
+import glass from '../../assets/glass.png';
 
 function Copyright() {
   return (
@@ -66,6 +67,7 @@ export default function Movies() {
   const classes = useStyles();
   const [listMovies, setListMovies] = React.useState<Movie[]>([]);
   const [currentCategory, setCurrentCategory] = React.useState<Genre>({} as Genre);
+  const [moviesToSearch, setMoviesToSearch] = React.useState<Movie[]>([]);
   const params = useLocation();
 
   React.useEffect(() => {
@@ -80,6 +82,16 @@ export default function Movies() {
 
     const filteredMovies = results.filter((movie: any) => movie.genre_ids.includes(genreId));
     setListMovies(filteredMovies);
+    setMoviesToSearch(filteredMovies);
+    console.log(filteredMovies)
+  }
+
+  function searchMovie({target}: any){
+
+    const movieSearch = target.value as string;
+    const listOfMovies = moviesToSearch.filter((movie)=> movie.title.toLocaleUpperCase().includes(movieSearch.toLocaleUpperCase()));
+    setListMovies(listOfMovies);
+    console.log(listOfMovies)
   }
 
   return (
@@ -112,10 +124,10 @@ export default function Movies() {
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                {currentCategory?.name}
             </Typography>
-            {/* <div className='search-div'>
-              <img src="./lupa.png" alt="" className='search-logo' width={25} height={25} />
-              <input className='search-input' />
-            </div> */}
+            <div className='search-container'>
+              <button className='search-btn'><img src={glass} alt="" className='search-icon'/></button>
+              <input className='search-input' onChange={searchMovie}/>
+            </div> 
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">

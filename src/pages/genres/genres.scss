@@ -1,39 +1,6 @@
-.cardMovie{
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-  }
+.cardMovie {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
 
-.search-input{
-    border: solid 0.1px #9e9e9e;
-    border-radius: 10px;
-    width: 300px;
-    height: 30px;
-  }
-.search-input:focus{
-  border: solid 0.1px #9e9e9e;
-  box-shadow: 5px 5px 5px  #9e9e9e;
-    border-radius: 10px;
-}
-.search-icon{
-  width: 20px;
-  height: 20px;
-}
-.search-btn{
-  height: 40px;
-  width: 40px;
-  border:none;
-  border-radius: 20px;
-}
-.search-container{
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px
-}
-input:focus, select:focus {
-  box-shadow: 0 0 0 0;
-  border: 0 none;
-  outline: 0;
-} 

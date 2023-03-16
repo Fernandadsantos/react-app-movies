@@ -4,8 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid'; 
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -64,21 +63,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface formattedGenre extends Genre{
+interface formattedGenre extends Genre {
   cover?: string;
   defaultImage?: string;
 }
-
-
-/*
-navigate({rota},{
-  state: {
-    dados para passar
-  }
-})
-
-*/
-
 
 export default function Album() {
   const classes = useStyles();
@@ -98,7 +86,7 @@ export default function Album() {
     const { data: { results } } = await api
       .get("/movie/popular?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
 
-    
+
     const formattedGenres = genres.map(({ id, name }: Genre) => {
       const foundMovieByGenre = results.find((movie: any) => movie.genre_ids.find((genreId: number) => genreId === id))
       return {
@@ -108,12 +96,12 @@ export default function Album() {
         defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2m5BZfIh54NvdcU3dU1RSoUMs8lDbJbjsgA&usqp=CAU"
       }
     })
- 
+
     setListFormattedGenres(formattedGenres)
-    setListGenres(formattedGenres) 
+    setListGenres(formattedGenres)
   }
 
-  function searchCategory ({target}: any){ 
+  function searchCategory({ target }: any) {
     const searchTerm = target.value as string;
     const resultSearch = listGenres.filter((category: Genre) => category.name.toLocaleUpperCase().includes(searchTerm.toLocaleUpperCase()));
 
@@ -131,33 +119,25 @@ export default function Album() {
       }
     )
 
-    
+
   }
 
-
+  
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
+      <AppBar position="relative" color='transparent'>
+        <div className='header-genres'>
           <Typography variant="h6" color="inherit" noWrap>
             Catalogo de filmes
           </Typography>
-        </Toolbar>
-      </AppBar>
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography component="h2" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Catalogo
-            </Typography>
-            <div className='search-container'>
-              <button className='search-btn'><img src={glass} alt="" className='search-icon'/></button>
-              <input onChange={searchCategory} type="text" className='search-input' />
-            </div>
-          </Container>
+          <div className='search-container'>
+            <button className='search-btn'><img src={glass} alt="" className='search-icon' /></button>
+            <input onChange={searchCategory} className='search-input' placeholder='Titulos, gêneros...'/>
+          </div>
         </div>
+      </AppBar>
+      <main> 
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>

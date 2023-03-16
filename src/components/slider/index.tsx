@@ -4,7 +4,7 @@ import './slider.scss'
 
 
 
-function CustomSlider(props: Settings):JSX.Element{
+function CustomSlider(props: Settings){
 
 return(
     <Slider {...props}>

@@ -1,19 +1,18 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid'; 
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import { api} from '../../api/axios';
+import { api } from '../../api/axios';
 import { useLocation } from 'react-router-dom';
 import { Breadcrumbs } from '@material-ui/core';
 import { Genre, Movie } from '../../interfaces';
 import MovieDetails from '../../components/Movie';
 import './movies.scss'
-import glass from '../../assets/glass.png';
+import SearchBar from '../../components/search'; 
 
 function Copyright() {
   return (
@@ -71,8 +70,8 @@ export default function Movies() {
   const params = useLocation();
 
   React.useEffect(() => {
-    const { state: { id, name} } = params;
-    setCurrentCategory({ id, name})
+    const { state: { id, name } } = params;
+    setCurrentCategory({ id, name })
     getPopularMoviesByGenreId(id);
   }, [params])
 
@@ -86,48 +85,42 @@ export default function Movies() {
     console.log(filteredMovies)
   }
 
-  function searchMovie({target}: any){
+  function searchMovie({ target }: any) {
 
-    const movieSearch = target.value as string;
-    const listOfMovies = moviesToSearch.filter((movie)=> movie.title.toLocaleUpperCase().includes(movieSearch.toLocaleUpperCase()));
-    setListMovies(listOfMovies);
-    console.log(listOfMovies)
+    const movieSearch = target.value as string
+    const listOfMovies = moviesToSearch.filter((movie) => movie.title.toLocaleUpperCase().includes(movieSearch.toLocaleUpperCase()));
+    setListMovies(listOfMovies); 
   }
 
   return (
     <React.Fragment>
 
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Movie Catalog
-          </Typography>
-        </Toolbar>
+      <AppBar position="relative" color='transparent'>
+        <div className='header-movies'>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" href='/'>
+              Catalogo
+            </Link>
+            <Link
+              underline="hover"
+              color="inherit"
+              href="/movies"
+            >
+              Filmes
+            </Link>
+          </Breadcrumbs>
+          <SearchBar onChange={searchMovie}/>
+        </div>
       </AppBar>
-            <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href='/'>
-          Catalogo
-        </Link>
-        <Link
-          underline="hover"
-          color="inherit"
-          href="/movies"
-        >
-          Filmes
-        </Link>
-      </Breadcrumbs>
+
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-               {currentCategory?.name}
+              {currentCategory?.name}
             </Typography>
-            <div className='search-container'>
-              <button className='search-btn'><img src={glass} alt="" className='search-icon'/></button>
-              <input className='search-input' onChange={searchMovie}/>
-            </div> 
           </Container>
         </div>
         <Container className={classes.cardGrid} maxWidth="md">

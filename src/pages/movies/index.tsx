@@ -94,32 +94,29 @@ export default function Movies() {
 
   return (
     <React.Fragment>
-
       <CssBaseline />
-      <AppBar position="relative" color='transparent'>
+      <AppBar className='hearder-index-movie' color='transparent'>
         <div className='header-movies'>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link underline="hover" color="inherit" href='/'>
-              Catalogo
+          <Breadcrumbs >
+            <Link underline="none"  href='/'>
+             <span className='header-title-movie'>Catalogo</span>
             </Link>
             <Link
-              underline="hover"
-              color="inherit"
+              underline="none"
               href="/movies"
             >
-              Filmes
+              <span className='header-title-movie'>Filmes</span>
             </Link>
           </Breadcrumbs>
           <SearchBar onChange={searchMovie}/>
         </div>
       </AppBar>
-
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
-            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              {currentCategory?.name}
+            <Typography  component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+              <span className='currentCategory'>{currentCategory?.name}</span>
             </Typography>
           </Container>
         </div>

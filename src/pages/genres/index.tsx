@@ -4,16 +4,18 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid'; 
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { api, ROOT_IMAGE } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
-import { Genre } from '../../interfaces';
-import glass from '../../assets/glass.png'
+import { Genre, Movie } from '../../interfaces';
 import './genres.scss'
+import SearchBar from '../../components/search';
+import { Breadcrumbs } from '@material-ui/core';
+import { Maximize, Style } from '@material-ui/icons';
 
 
 
@@ -72,7 +74,7 @@ export default function Album() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
-  const [listGenres, setListGenres] = React.useState<Genre[]>([]);
+  const [listGenres, setListGenres] = React.useState<Genre[]>([]); 
 
   React.useEffect(() => {
     getGenresAndFormtting()
@@ -85,7 +87,7 @@ export default function Album() {
 
     const { data: { results } } = await api
       .get("/movie/popular?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
-
+ 
 
     const formattedGenres = genres.map(({ id, name }: Genre) => {
       const foundMovieByGenre = results.find((movie: any) => movie.genre_ids.find((genreId: number) => genreId === id))
@@ -98,7 +100,8 @@ export default function Album() {
     })
 
     setListFormattedGenres(formattedGenres)
-    setListGenres(formattedGenres)
+    setListGenres(formattedGenres)  
+
   }
 
   function searchCategory({ target }: any) {
@@ -122,43 +125,49 @@ export default function Album() {
 
   }
 
-  
+
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="relative" color='transparent'>
-        <div className='header-genres'>
-          <Typography variant="h6" color="inherit" noWrap>
-            Catalogo de filmes
-          </Typography>
-          <div className='search-container'>
-            <button className='search-btn'><img src={glass} alt="" className='search-icon' /></button>
-            <input onChange={searchCategory} className='search-input' placeholder='Titulos, gêneros...'/>
+      <main className='mainPage'  >
+        <AppBar className='hearder-index' color='transparent' >
+          <div className='header-genres'>
+            <Breadcrumbs >
+              <Link underline='none' href='/' >
+                <span className='header-title'>Catalogo</span>
+              </Link>
+            </Breadcrumbs>
+            <SearchBar onChange={searchCategory} />
           </div>
-        </div>
-      </AppBar>
-      <main> 
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {listFormattedGenres.map((genre) => (
-              <Grid item key={genre.id} xs={12} sm={6} md={4}>
-                <Card className={classes.card} onClick={() => goToMoviesList(genre.id, genre.name)}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={genre.cover ? ROOT_IMAGE + genre.cover : genre.defaultImage}
-                    title={genre.name}
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <h2 className='cardMovie'>
-                      <span >{genre.name}</span>
-                    </h2>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+        </AppBar>
+        <section>
+          <div>
+            <img className='imgBackground' src="https://occ-0-4926-3851.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABUIL2R5MjnaamkEbspAcgPjaz9nkln1L0Kll6Lu8w37WsIRh0Y7ts6Gfn0CfQ9SkkIYyQFqzx2DMaBQG2l7X7K2GWPuC7mylqX4h.jpg?r=ca8" alt=""  />
+          </div>
+        </section>
+        <section  className='sectionCards' >
+          <Container maxWidth="md">
+            {/* End hero unit */}
+            <Grid container spacing={4}>
+              {listFormattedGenres.map((genre) => (
+                <Grid item key={genre.id} xs={12} sm={6} md={4}>
+                  <Card className={classes.card} onClick={() => goToMoviesList(genre.id, genre.name)}>
+                    <CardMedia
+                      className={classes.cardMedia}
+                      image={genre.cover ? ROOT_IMAGE + genre.cover : genre.defaultImage}
+                      title={genre.name}
+                    />
+                    <CardContent className={classes.cardContent}>
+                      <h2 className='cardMovie'>
+                        <span >{genre.name}</span>
+                      </h2>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </section>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>

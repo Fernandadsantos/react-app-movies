@@ -166,7 +166,7 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
                             recommendations.map((movie) => (
 
                                 <div> 
-                                    <img src={movie?.poster_path ? ROOT_IMAGE + movie?.poster_path : imageAlternative} className='movieList' />
+                                    <img src={movie?.poster_path ? ROOT_IMAGE + movie?.poster_path : imageAlternative} className='movieList' alt=''/>
                                     <p className='movieTitleRecommendation'>
                                         {movie.title}
                                     </p>

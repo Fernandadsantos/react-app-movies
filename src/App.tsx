@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Albums from './pages/genres';
 import Movies from './pages/movies';
-import './App.css';
+import './App.css'; 
 import {
   createBrowserRouter,
   RouterProvider,
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
 
 
 function App() {
-  
+   
   
 
   return (

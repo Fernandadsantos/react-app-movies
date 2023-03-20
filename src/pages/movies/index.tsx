@@ -70,9 +70,11 @@ export default function Movies() {
   const params = useLocation();
 
   React.useEffect(() => {
-    const { state: { id, name } } = params;
-    setCurrentCategory({ id, name })
-    getPopularMoviesByGenreId(id);
+    if(params?.state){
+      const { state: { id, name } } = params;
+      setCurrentCategory({ id, name })
+      getPopularMoviesByGenreId(id); 
+    }
   }, [params])
 
   async function getPopularMoviesByGenreId(genreId: number) {
@@ -82,7 +84,6 @@ export default function Movies() {
     const filteredMovies = results.filter((movie: any) => movie.genre_ids.includes(genreId));
     setListMovies(filteredMovies);
     setMoviesToSearch(filteredMovies);
-    console.log(filteredMovies)
   }
 
   function searchMovie({ target }: any) {
@@ -103,7 +104,7 @@ export default function Movies() {
             </Link>
             <Link
               underline="none"
-              href="/movies"
+              href="#"
             >
               <span className='header-title-movie'>Filmes</span>
             </Link>

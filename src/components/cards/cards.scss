@@ -1,0 +1,33 @@
+.movieList {
+    width: 100px;
+    height: 150px;
+    transition: linear 0.2s;
+}
+
+.movieList:hover {
+    width: 110px;
+    height: 160px;
+    transition: linear 0.2s;
+}
+
+.movieTitleRecommendation {
+    font-size: smaller;
+}
+
+.cardMovie {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.cardMovie-movies {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+input :focus,
+select :focus {
+  outline: 0;
+}
+

@@ -40,6 +40,17 @@
     flex-wrap: wrap;
 } 
 
+@media screen and (min-width: 320px) and (max-width: 480px){
+    .search-input{
+      width: 200px;
+      height: 30px; 
+    }
+    .search-container{
+        padding: 25px; 
+
+    }
+  }
+
 input,
 select{ 
     outline: 0;

@@ -25,36 +25,6 @@
   letter-spacing: 2px;  
 }
 
-.movieList {
-  width: 100px;
-  height: 150px;
-  transition: linear 0.2s;
-}
-
-.movieList:hover {
-  width: 110px;
-  height: 160px;
-  transition: linear 0.2s;
-}
-
-.movieTitleRecommendation {
-  font-size: smaller;
-}
-
-.card-movies {
-  gap: 8px;
-  width: 100px;
-  height: 150px;
-  margin-top: 30px;
-  cursor: pointer;
-}
-
-.cardMovie-movies {
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-}
-
 input :focus,
 select :focus {
   outline: 0;

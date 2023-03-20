@@ -10,7 +10,7 @@ import { api } from '../../api/axios';
 import { useLocation } from 'react-router-dom';
 import { Breadcrumbs } from '@material-ui/core';
 import { Genre, Movie } from '../../interfaces';
-import MovieDetails from '../../components/Movie';
+import MovieDetails from '../../components/cards';
 import './movies.scss'
 import SearchBar from '../../components/search'; 
 
@@ -87,8 +87,8 @@ export default function Movies() {
 
   function searchMovie({ target }: any) {
 
-    const movieSearch = target.value as string
-    const listOfMovies = moviesToSearch.filter((movie) => movie.title.toLocaleUpperCase().includes(movieSearch.toLocaleUpperCase()));
+    const movieSearch = (target.value as string).normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '')
+    const listOfMovies = moviesToSearch.filter((movie) => movie.title.normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '').toLocaleUpperCase().includes(movieSearch.toLocaleUpperCase()));
     setListMovies(listOfMovies); 
   }
 

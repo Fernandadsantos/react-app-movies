@@ -104,10 +104,11 @@ export default function Album() {
 
   }
 
-  function searchCategory({ target }: any) {
-    const searchTerm = target.value as string;
-    const resultSearch = listGenres.filter((category: Genre) => category.name.toLocaleUpperCase().includes(searchTerm.toLocaleUpperCase()));
+   
 
+  function searchCategory({ target }: any) {
+    const searchTerm = (target.value as string).normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '');
+    const resultSearch = listGenres.filter((category: Genre) => category.name.normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '').toLocaleUpperCase().includes(searchTerm.toLocaleUpperCase()));
     setListFormattedGenres(resultSearch);
 
   }
@@ -130,7 +131,7 @@ export default function Album() {
     <React.Fragment>
       <CssBaseline />
       <main className='mainPage'  >
-        <AppBar className='hearder-index' color='transparent' >
+        <AppBar className='hearder-guia' color='transparent' >
           <div className='header-genres'>
             <Breadcrumbs >
               <Link underline='none' href='/' >

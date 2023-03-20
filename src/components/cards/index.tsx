@@ -2,15 +2,16 @@ import * as React from 'react';
 import { createTheme, makeStyles } from '@material-ui/core/styles';
 import Typography from '@mui/material/Typography';
 import Modal from 'react-modal';
-import { Movie, IMovieDetails } from '../interfaces';
+import { Movie, IMovieDetails } from '../../interfaces';
 import { Card, CardMedia, CardContent } from '@material-ui/core';
-import { ROOT_IMAGE, api } from '../api/axios';
+import { ROOT_IMAGE, api } from '../../api/axios';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { checkIfSinopse, errorMessages, maxText } from '../utils/format';
-import CustomSlider from '../components/slider';
+import { checkIfSinopse, errorMessages, maxText } from '../../utils/format';
+import CustomSlider from '../slider';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import imageAlternative from '../assets/cinemaImg.jpeg'
+import imageAlternative from '../../assets/cinemaImg.jpeg'
+import './cards.scss';
 
 const theme = createTheme();
 
@@ -36,7 +37,7 @@ const useStyles = makeStyles(() => ({
         flexDirection: 'column',
     },
     cardMedia: {
-        paddingTop: '56.25%', // 16:9
+        paddingTop: '56.25%', 
     },
     cardContent: {
         flexGrow: 1,
@@ -103,8 +104,7 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
                         }, content: {
                             width: 500,
                             padding: 40,
-
-                            backgroundColor: '#d8d8d8',
+                            backgroundColor: '#fff',
                             margin: "auto",
                             marginTop: 50,
                         },

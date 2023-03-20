@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Modal from 'react-modal';
 import { Movie, IMovieDetails } from '../../interfaces';
 import { Card, CardMedia, CardContent } from '@material-ui/core';
-import { ROOT_IMAGE, api } from '../../api/axios';
+import {getImageRoot, api } from '../../api/axios';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { checkIfSinopse, errorMessages, maxText } from '../../utils/format';
 import CustomSlider from '../slider';
@@ -141,7 +141,7 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
                          <Typography variant="h6" component="h2">
                             {movie.title}
                         </Typography>
-                        <img src={ROOT_IMAGE + movie.poster_path} style={{ objectFit: 'contain' }} alt="" width={300} height={400} />
+                        <img src={getImageRoot() + movie.poster_path} style={{ objectFit: 'contain' }} alt="" width={300} height={400} />
                     </div>
                     <div>
                     <Typography sx={{ mt: 2 }}>
@@ -166,7 +166,7 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
                             recommendations.map((movie) => (
 
                                 <div> 
-                                    <img src={movie?.poster_path ? ROOT_IMAGE + movie?.poster_path : imageAlternative} className='movieList' alt=''/>
+                                    <img src={movie?.poster_path ? getImageRoot("w500") + movie?.poster_path : imageAlternative} className='movieList' alt=''/>
                                     <p className='movieTitleRecommendation'>
                                         {movie.title}
                                     </p>
@@ -183,7 +183,7 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
                 <Card className={classes.card} onClick={() => setOpen(true)}>
                     <CardMedia
                         className={classes.cardMedia}
-                        image={ROOT_IMAGE + movie.backdrop_path}
+                        image={getImageRoot("w500") + movie.backdrop_path}
                         title={movie.title}
 
                     />

@@ -1,6 +1,9 @@
 import axios from 'axios';
+  
+function getImageRoot(imageSize = "original"){
+  return "http://image.tmdb.org/t/p/" + imageSize;
+}
 
-const ROOT_IMAGE = "http://image.tmdb.org/t/p/w500/";
 
 const api = axios.create({
     baseURL: 'https://api.themoviedb.org/3',
@@ -13,4 +16,4 @@ const api = axios.create({
 
 
 
-export {api, ROOT_IMAGE};
+export {api, getImageRoot};

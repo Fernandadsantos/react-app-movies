@@ -9,13 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import { api, ROOT_IMAGE } from '../../api/axios';
+import { api, getImageRoot} from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
-import { Genre, Movie } from '../../interfaces';
-import './genres.scss'
+import { Genre } from '../../interfaces';
+import './genres.scss';
 import SearchBar from '../../components/search';
 import { Breadcrumbs } from '@material-ui/core';
-import { Maximize, Style } from '@material-ui/icons';
+import defaultImage from '../../assets/defaultImg.jpeg';
 
 
 
@@ -75,7 +75,7 @@ export default function Album() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
-  const [listGenres, setListGenres] = React.useState<Genre[]>([]); 
+  const [listGenres, setListGenres] = React.useState<Genre[]>([]);
 
   React.useEffect(() => {
     getGenresAndFormtting()
@@ -88,7 +88,7 @@ export default function Album() {
 
     const { data: { results } } = await api
       .get("/movie/popular?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
- 
+
 
     const formattedGenres = genres.map(({ id, name }: Genre) => {
       const foundMovieByGenre = results.find((movie: any) => movie.genre_ids.find((genreId: number) => genreId === id))
@@ -96,17 +96,16 @@ export default function Album() {
         id,
         name,
         cover: foundMovieByGenre?.backdrop_path,
-        defaultImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2m5BZfIh54NvdcU3dU1RSoUMs8lDbJbjsgA&usqp=CAU"
+        defaultImage
       }
     })
 
     setListFormattedGenres(formattedGenres)
-    console.log(formattedGenres)
-    setListGenres(formattedGenres)  
+    setListGenres(formattedGenres)
 
   }
 
-   
+
 
   function searchCategory({ target }: any) {
     const searchTerm = (target.value as string).normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '');
@@ -128,26 +127,18 @@ export default function Album() {
 
   }
 
-  function getRandomPoster () {
-    const max = listFormattedGenres.length-1;
+  function getRandomPoster() {
+    const max = listFormattedGenres.length - 1;
     const min = 0;
-    const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2m5BZfIh54NvdcU3dU1RSoUMs8lDbJbjsgA&usqp=CAU"
-    
-
-    if(max > -1){
-    const numberPoster = Math.floor(Math.random() * (max - min) + min);
-    console.log(numberPoster)
-    return listFormattedGenres[numberPoster]?.cover 
-           ? ROOT_IMAGE + listFormattedGenres[numberPoster]?.cover
-           : defaultImage
-
+    if (max > -1) {
+      const numberPoster = Math.floor(Math.random() * (max - min) + min);
+      return listFormattedGenres[numberPoster]?.cover
+        ? getImageRoot() + listFormattedGenres[numberPoster]?.cover
+        : defaultImage
     }
-    
-    
-      return defaultImage;
-    
-    }
-  
+    return defaultImage;
+
+  }
 
 
   return (
@@ -165,11 +156,11 @@ export default function Album() {
           </div>
         </AppBar>
         <section>
-          <div>
-            <img className='imgBackground' src={getRandomPoster()} alt=""  />
+          <div className='imageSection'>
+            <img className='imgBackground' src={getRandomPoster()} alt=""/>
           </div>
         </section>
-        <section  className='sectionCards' >
+        <section className='sectionCards' >
           <Container maxWidth="md">
             {/* End hero unit */}
             <Grid container spacing={4}>
@@ -178,7 +169,7 @@ export default function Album() {
                   <Card className={classes.card} onClick={() => goToMoviesList(genre.id, genre.name)}>
                     <CardMedia
                       className={classes.cardMedia}
-                      image={genre.cover ? ROOT_IMAGE + genre.cover : genre.defaultImage}
+                      image={genre.cover ? getImageRoot() + genre.cover : genre.defaultImage}
                       title={genre.name}
                     />
                     <CardContent className={classes.cardContent}>

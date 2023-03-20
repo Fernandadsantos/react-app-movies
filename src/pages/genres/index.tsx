@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface formattedGenre extends Genre {
+  index?: number;
   cover?: string;
   defaultImage?: string;
 }
@@ -100,6 +101,7 @@ export default function Album() {
     })
 
     setListFormattedGenres(formattedGenres)
+    console.log(formattedGenres)
     setListGenres(formattedGenres)  
 
   }
@@ -126,6 +128,27 @@ export default function Album() {
 
   }
 
+  function getRandomPoster () {
+    const max = listFormattedGenres.length-1;
+    const min = 0;
+    const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2m5BZfIh54NvdcU3dU1RSoUMs8lDbJbjsgA&usqp=CAU"
+    
+
+    if(max > -1){
+    const numberPoster = Math.floor(Math.random() * (max - min) + min);
+    console.log(numberPoster)
+    return listFormattedGenres[numberPoster]?.cover 
+           ? ROOT_IMAGE + listFormattedGenres[numberPoster]?.cover
+           : defaultImage
+
+    }
+    
+    
+      return defaultImage;
+    
+    }
+  
+
 
   return (
     <React.Fragment>
@@ -143,7 +166,7 @@ export default function Album() {
         </AppBar>
         <section>
           <div>
-            <img className='imgBackground' src="https://occ-0-4926-3851.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABUIL2R5MjnaamkEbspAcgPjaz9nkln1L0Kll6Lu8w37WsIRh0Y7ts6Gfn0CfQ9SkkIYyQFqzx2DMaBQG2l7X7K2GWPuC7mylqX4h.jpg?r=ca8" alt=""  />
+            <img className='imgBackground' src={getRandomPoster()} alt=""  />
           </div>
         </section>
         <section  className='sectionCards' >

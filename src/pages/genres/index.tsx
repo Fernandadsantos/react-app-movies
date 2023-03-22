@@ -1,85 +1,52 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
-import { api, getImageRoot} from '../../api/axios';
+import { api, getImageRoot } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { Genre } from '../../interfaces';
 import './genres.scss';
-import SearchBar from '../../components/search';
-import { Breadcrumbs } from '@material-ui/core';
 import defaultImage from '../../assets/defaultImg.jpeg';
+import Poster from '../../components/poster';
+import Header from '../../components/header';
+import Footer from '../../components/footer'; 
 
-
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Movie Catalog
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+interface currentPoster  {
+  index?: number;
+  cover?: string;
+  defaultImage?: string;
+  movieOverview?: string;
+  movieTitle?: string;
 }
-
-
-const useStyles = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-}));
 
 interface formattedGenre extends Genre {
   index?: number;
   cover?: string;
   defaultImage?: string;
+  movieOverview?: string;
+  movieTitle?: string;
 }
 
-export default function Album() {
-  const classes = useStyles();
+
+export default function Genres() { 
   const navigate = useNavigate();
   const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
   const [listGenres, setListGenres] = React.useState<Genre[]>([]);
+  const [currentMoviePoster, setCurrentMoviePoster] = React.useState<currentPoster>({cover: defaultImage});
 
   React.useEffect(() => {
     getGenresAndFormtting()
   }, [])
+
+  React.useEffect(()=>{ 
+    const periodicGetRandomMoviePostSubscriber = setInterval(() => {
+      getRandomPoster()
+   },2000);
+   return ()=> {
+     clearInterval(periodicGetRandomMoviePostSubscriber)
+   };
+   }, [])
 
   async function getGenresAndFormtting() {
     const { data: { genres } } = await api
@@ -96,17 +63,18 @@ export default function Album() {
         id,
         name,
         cover: foundMovieByGenre?.backdrop_path,
-        defaultImage
+        defaultImage,
+        movieTitle: foundMovieByGenre?.title,
+        movieOverview: foundMovieByGenre?.overview,
       }
     })
 
+    getRandomPoster()
     setListFormattedGenres(formattedGenres)
     setListGenres(formattedGenres)
 
+
   }
-
-
-
   function searchCategory({ target }: any) {
     const searchTerm = (target.value as string).normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '');
     const resultSearch = listGenres.filter((category: Genre) => category.name.normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '').toLocaleUpperCase().includes(searchTerm.toLocaleUpperCase()));
@@ -126,72 +94,53 @@ export default function Album() {
 
 
   }
-
   function getRandomPoster() {
     const max = listFormattedGenres.length - 1;
     const min = 0;
     if (max > -1) {
       const numberPoster = Math.floor(Math.random() * (max - min) + min);
-      return listFormattedGenres[numberPoster]?.cover
-        ? getImageRoot() + listFormattedGenres[numberPoster]?.cover
+      const {movieTitle,  movieOverview, cover} = listFormattedGenres[numberPoster];
+  
+      setCurrentMoviePoster({movieTitle, movieOverview , cover: cover
+        ? getImageRoot() + cover
         : defaultImage
+      }); 
     }
-    return defaultImage;
-
+    else{
+      setCurrentMoviePoster({cover: defaultImage}) 
+    }
   }
-
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <main className='mainPage'  >
-        <AppBar className='hearder-guia' color='transparent' >
-          <div className='header-genres'>
-            <Breadcrumbs >
-              <Link underline='none' href='/' >
-                <span className='header-title'>Catalogo</span>
-              </Link>
-            </Breadcrumbs>
-            <SearchBar onChange={searchCategory} />
-          </div>
-        </AppBar>
-        <section>
-          <div className='imageSection'>
-            <img className='imgBackground' src={getRandomPoster()} alt=""/>
-          </div>
+      <main className='mainPage'>
+        <Header title='Catalogo' onChange={searchCategory} />
+        <section className='poster-genre'>
+          <Poster  {...currentMoviePoster} />
         </section>
         <section className='sectionCards' >
           <Container maxWidth="md">
             {/* End hero unit */}
-            <Grid container spacing={4}>
+            <Grid container spacing={2}>
               {listFormattedGenres.map((genre) => (
                 <Grid item key={genre.id} xs={12} sm={6} md={4}>
-                  <Card className={classes.card} onClick={() => goToMoviesList(genre.id, genre.name)}>
-                    <CardMedia
-                      className={classes.cardMedia}
-                      image={genre.cover ? getImageRoot() + genre.cover : genre.defaultImage}
-                      title={genre.name}
+                  <div className='cardGenre' onClick={() => goToMoviesList(genre.id, genre.name)}>
+                    <img
+                      alt="genreImage"
+                      className='genreImage'
+                      src={genre.cover ? getImageRoot() + genre.cover : genre.defaultImage}
                     />
-                    <CardContent className={classes.cardContent}>
-                      <h2 className='cardMovie'>
-                        <span >{genre.name}</span>
-                      </h2>
-                    </CardContent>
-                  </Card>
+                    <h2 className='cardGenreTitle'>{genre.name}</h2>
+                  </div>
                 </Grid>
               ))}
             </Grid>
           </Container>
+
         </section>
+        < Footer />
       </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          links
-        </Typography>
-        <Copyright />
-      </footer>
-      {/* End footer */}
     </React.Fragment>
   );
 }

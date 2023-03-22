@@ -15,9 +15,16 @@
 }
 
 .cardMovie {
+    border : solid 0.3px #9e9e9e4b ; 
+    border-radius: 5px;
     cursor: pointer;
     text-decoration: none;
     color: inherit;
+    height: 400px; 
+}
+
+.cardMovie > :first-child{
+    background-color: #141414;
 }
 
 .cardMovie-movies {

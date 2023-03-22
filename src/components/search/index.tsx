@@ -2,7 +2,7 @@ import glass from '../../assets/magnifying-glass.svg';
 import './search.scss';
 
 
-function SearchBar({ onChange }: any) {
+function SearchBar({ onChange }: {onChange: React.ChangeEventHandler<HTMLInputElement> | undefined}) {
 
     return (
         <div className='search-container'>

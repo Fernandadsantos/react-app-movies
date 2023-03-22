@@ -102,9 +102,10 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
                         overlay: {
                             backgroundColor: 'rgba(0, 0, 0, 0.5)',
                         }, content: {
+                            border: 'none',
                             width: 500,
                             padding: 40,
-                            backgroundColor: '#fff',
+                            backgroundColor: '#141414',
                             margin: "auto",
                             marginTop: 50,
                         },

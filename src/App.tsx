@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Albums from './pages/genres';
+import Genres from './pages/genres';
 import Movies from './pages/movies';
-import './App.css'; 
+import './App.scss'; 
 import {
   createBrowserRouter,
   RouterProvider,
@@ -10,7 +10,7 @@ import {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Albums />,
+    element: <Genres />,
   },
   {
     path: "/movies",

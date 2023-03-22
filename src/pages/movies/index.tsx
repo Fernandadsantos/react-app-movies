@@ -1,31 +1,19 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid'; 
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import { api } from '../../api/axios';
+import { api, getImageRoot } from '../../api/axios';
 import { useLocation } from 'react-router-dom';
 import { Breadcrumbs } from '@material-ui/core';
 import { Genre, Movie } from '../../interfaces';
 import MovieDetails from '../../components/cards';
-import './movies.scss'
-import SearchBar from '../../components/search'; 
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Movie Catalog
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import './movies.scss';
+import Poster from '../../components/poster';
+import defaultImage from '../../assets/defaultImg.jpeg';
+import Header from '../../components/header';
+import Footer from '../../components/footer';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +48,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface currentPoster  {
+  index?: number;
+  cover?: string;
+  defaultImage?: string;
+  movieOverview?: string;
+  movieTitle?: string;
+}
 
 
 export default function Movies() {
@@ -67,15 +62,25 @@ export default function Movies() {
   const [listMovies, setListMovies] = React.useState<Movie[]>([]);
   const [currentCategory, setCurrentCategory] = React.useState<Genre>({} as Genre);
   const [moviesToSearch, setMoviesToSearch] = React.useState<Movie[]>([]);
+  const [currentMoviePoster, setCurrentMoviePoster] = React.useState<currentPoster>({cover: defaultImage});
   const params = useLocation();
 
   React.useEffect(() => {
-    if(params?.state){
+    if (params?.state) {
       const { state: { id, name } } = params;
       setCurrentCategory({ id, name })
-      getPopularMoviesByGenreId(id); 
+      getPopularMoviesByGenreId(id);
     }
   }, [params])
+
+  React.useEffect(()=>{ 
+   const periodicGetRandomMoviePostSubscriber = setInterval(() => {
+    getRandomMovie()
+  },120000);
+  return ()=> {
+    clearInterval(periodicGetRandomMoviePostSubscriber)
+  };
+  }, [])
 
   async function getPopularMoviesByGenreId(genreId: number) {
     const { data: { results } } = await api
@@ -84,43 +89,53 @@ export default function Movies() {
     const filteredMovies = results.filter((movie: any) => movie.genre_ids.includes(genreId));
     setListMovies(filteredMovies);
     setMoviesToSearch(filteredMovies);
+    getRandomMovie()
   }
 
   function searchMovie({ target }: any) {
 
     const movieSearch = (target.value as string).normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '')
     const listOfMovies = moviesToSearch.filter((movie) => movie.title.normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '').toLocaleUpperCase().includes(movieSearch.toLocaleUpperCase()));
-    setListMovies(listOfMovies); 
+    setListMovies(listOfMovies);
+  }
+
+  function getRandomMovie() {
+    const max = listMovies.length - 1;
+    const min = 0;
+    if (max > -1) {
+      const numberPoster = Math.floor(Math.random() * (max - min) + min);
+      setCurrentMoviePoster({...listMovies[numberPoster], cover: listMovies[numberPoster]?.backdrop_path
+        ? getImageRoot() + listMovies[numberPoster]?.backdrop_path
+        : defaultImage});
+    }
+    else{
+      setCurrentMoviePoster({cover: defaultImage});
+    }
   }
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar className='hearder-index-movie' color='transparent'>
-        <div className='header-movies'>
-          <Breadcrumbs >
-            <Link underline="none"  href='/'>
-             <span className='header-title-movie'>Catalogo</span>
-            </Link>
-            <Link
-              underline="none"
-              href="#"
-            >
-              <span className='header-title-movie'>Filmes</span>
-            </Link>
-          </Breadcrumbs>
-          <SearchBar onChange={searchMovie}/>
-        </div>
-      </AppBar>
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography  component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              <span className='currentCategory'>{currentCategory?.name}</span>
-            </Typography>
-          </Container>
-        </div>
+      <Header onChange={searchMovie}>
+        <Breadcrumbs >
+          <Link underline="none" href='/'>
+            <span className='header-title-movie'>Catalogo</span>
+          </Link>
+          <Link
+            underline="none"
+            href="#"
+          >
+            <span className='header-title-movie'>Filmes</span>
+          </Link>
+        </Breadcrumbs>
+      </Header>
+      <main className='mainMovie'>
+        <section className='category'>
+          <Poster {...currentMoviePoster} />
+          <div className='divCategory'>
+            <h2 className='currentCategory'>{currentCategory?.name}</h2>
+          </div>
+        </section>
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
@@ -131,15 +146,8 @@ export default function Movies() {
             ))}
           </Grid>
         </Container>
+        <Footer />
       </main>
-      {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
-          links
-        </Typography>
-        <Copyright />
-      </footer>
-      {/* End footer */}
     </React.Fragment>
   );
 }

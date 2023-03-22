@@ -17,7 +17,7 @@ export interface Movie {
   
 export interface Genre {
     id: number;
-    name: string; 
+    name: string;  
   }
 
 export interface ProductionCompany {

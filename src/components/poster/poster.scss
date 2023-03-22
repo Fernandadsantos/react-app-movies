@@ -1,0 +1,24 @@
+.imgBackground {
+    width: 1300px;
+}
+
+.imageSection {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.posterContent{  
+    position: absolute;  
+    margin-top: 500px; 
+}
+
+.movieTitlePoster{ 
+    margin : 5px;
+    font-size: 40px;
+    letter-spacing: 1px;
+}
+
+.movieOverviewPoster{  
+    font-size: 20px; 
+}

@@ -42,7 +42,7 @@ export default function Genres() {
   React.useEffect(()=>{ 
     const periodicGetRandomMoviePostSubscriber = setInterval(() => {
       getRandomPoster()
-   },2000);
+   },1000);
    return ()=> {
      clearInterval(periodicGetRandomMoviePostSubscriber)
    };

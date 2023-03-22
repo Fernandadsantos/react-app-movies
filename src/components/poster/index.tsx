@@ -1,7 +1,6 @@
 import './poster.scss';
 
 
-const IMAGE_WIDTH = 1000; 
 
 interface posterProps {
     cover?: string;
@@ -14,12 +13,14 @@ function Poster({ cover, movieTitle, movieOverview }: posterProps) {
 
     return (
         <div className='imageSection'>
+            <div className='posterContainer'>
             <img className='imgBackground' src={cover} alt="" />
-            <div className='posterContent' style={{maxWidth: IMAGE_WIDTH}}>
+            <div className='posterContent'>
                 <h1 className='movieTitlePoster'>{movieTitle}</h1>
                 <span className='movieOverviewPoster'>{movieOverview}</span>
+            </div> 
             </div>
-
+           
         </div>
 
     )

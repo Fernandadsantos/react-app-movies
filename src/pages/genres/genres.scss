@@ -21,8 +21,7 @@
 	background-position: center; 
 
 }
-.genreImage { 
-  height: 190px;
+.genreImage {  
   width: 300px;
   border: solid 0.1px #8f8a8ad8;
   border-radius: 5px;
@@ -30,7 +29,8 @@
 
 .cardGenreTitle{
   position: absolute;  
-  padding-top: 150px;
+  padding-top: 130px;
   padding-left: 20px;
-
+  background-image: linear-gradient(60deg, #524a4ae1 9%, transparent 25%);
+  background-position:center;
 }

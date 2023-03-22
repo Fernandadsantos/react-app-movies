@@ -1,24 +1,45 @@
 .imgBackground {
-    width: 1300px;
+    position: relative;
+    width: 1000px;
+    opacity: 0.6;
 }
 
 .imageSection {
     display: flex; 
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: column; 
     align-items: center;
 }
-.posterContent{  
-    position: absolute;  
-    margin-top: 500px; 
+
+.posterContent {
+	position: absolute;
+	max-width: 900px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	z-index: 1000;
 }
 
-.movieTitlePoster{ 
-    margin : 5px;
+.movieTitlePoster{   
+    text-align: left;
+    align-self: flex-start ;
+    padding : 55px; 
+    padding-bottom: 0;
     font-size: 40px;
     letter-spacing: 1px;
+    gap: 60px;
 }
 
 .movieOverviewPoster{  
+    text-align: left;
+    align-self: flex-start ; 
+    padding: 55px;
+    padding-top: 0;
     font-size: 20px; 
+}
+
+.posterContainer {
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { api, getImageRoot } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
@@ -10,9 +9,10 @@ import './genres.scss';
 import defaultImage from '../../assets/defaultImg.jpeg';
 import Poster from '../../components/poster';
 import Header from '../../components/header';
-import Footer from '../../components/footer'; 
+import Footer from '../../components/footer';
+import ArrowScroll from '../../components/arrowScroll';
 
-interface currentPoster  {
+interface currentPoster {
   index?: number;
   cover?: string;
   defaultImage?: string;
@@ -29,24 +29,40 @@ interface formattedGenre extends Genre {
 }
 
 
-export default function Genres() { 
+export default function Genres() {
   const navigate = useNavigate();
   const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
   const [listGenres, setListGenres] = React.useState<Genre[]>([]);
-  const [currentMoviePoster, setCurrentMoviePoster] = React.useState<currentPoster>({cover: defaultImage});
+  const [currentMoviePoster, setCurrentMoviePoster] = React.useState<currentPoster>({ cover: defaultImage });
+  const [showScrollBtn, setShowScrollBtn] = React.useState(false);
 
   React.useEffect(() => {
     getGenresAndFormtting()
   }, [])
 
-  React.useEffect(()=>{ 
+  React.useEffect(() => {
     const periodicGetRandomMoviePostSubscriber = setInterval(() => {
       getRandomPoster()
-   },1000);
-   return ()=> {
-     clearInterval(periodicGetRandomMoviePostSubscriber)
-   };
-   }, [])
+    }, 120000);
+    return () => {
+      clearInterval(periodicGetRandomMoviePostSubscriber)
+    };
+  }, [])
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY >= window.innerHeight / 2) {
+        setShowScrollBtn(true);
+      } else {
+        setShowScrollBtn(false);
+      }
+    })
+  }, [])
+
+
+  function scrollToTop(){
+    window.scrollTo(0,0); 
+  }
 
   async function getGenresAndFormtting() {
     const { data: { genres } } = await api
@@ -91,25 +107,25 @@ export default function Genres() {
         }
       }
     )
-
-
   }
   function getRandomPoster() {
     const max = listFormattedGenres.length - 1;
     const min = 0;
     if (max > -1) {
       const numberPoster = Math.floor(Math.random() * (max - min) + min);
-      const {movieTitle,  movieOverview, cover} = listFormattedGenres[numberPoster];
-  
-      setCurrentMoviePoster({movieTitle, movieOverview , cover: cover
-        ? getImageRoot() + cover
-        : defaultImage
-      }); 
+      const { movieTitle, movieOverview, cover } = listFormattedGenres[numberPoster];
+
+      setCurrentMoviePoster({
+        movieTitle, movieOverview, cover: cover
+          ? getImageRoot() + cover
+          : defaultImage
+      });
     }
-    else{
-      setCurrentMoviePoster({cover: defaultImage}) 
+    else {
+      setCurrentMoviePoster({ cover: defaultImage })
     }
   }
+
 
   return (
     <React.Fragment>
@@ -119,6 +135,7 @@ export default function Genres() {
         <section className='poster-genre'>
           <Poster  {...currentMoviePoster} />
         </section>
+
         <section className='sectionCards' >
           <Container maxWidth="md">
             {/* End hero unit */}
@@ -131,16 +148,18 @@ export default function Genres() {
                       className='genreImage'
                       src={genre.cover ? getImageRoot() + genre.cover : genre.defaultImage}
                     />
-                    <h2 className='cardGenreTitle'>{genre.name}</h2>
+                    <div className='titleContainer'>
+                      <h2 className='cardGenreTitle'>{genre.name}</h2>
+                    </div>
                   </div>
                 </Grid>
               ))}
             </Grid>
           </Container>
-
         </section>
         < Footer />
       </main>
+      {showScrollBtn ? <ArrowScroll onClick={scrollToTop}/> : null}
     </React.Fragment>
   );
 }

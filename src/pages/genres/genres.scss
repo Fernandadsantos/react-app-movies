@@ -1,36 +1,49 @@
-.mainPage { 
+.mainPage {
   background-color: #141414;
 }
 
 .sectionCards {
   position: relative;
   left: 0;
-  right: 0; 
+  right: 0;
 }
 
-.poster-genre{
+.poster-genre {
   margin-bottom: 15px;
-} 
+}
 
 .cardGenre {
-	display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center; 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  cursor: pointer;
 
 }
-.genreImage {  
+
+.genreImage {
   width: 300px;
   border: solid 0.1px #8f8a8ad8;
   border-radius: 5px;
 }
 
-.cardGenreTitle{
-  position: absolute;  
-  padding-top: 130px;
-  padding-left: 20px;
-  background-image: linear-gradient(60deg, #524a4ae1 9%, transparent 25%);
-  background-position:center;
+.titleContainer { 
+  background-position: center; 
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+}
+
+.cardGenreTitle {
+  position: relative;
+  top:40px;
+  left:15px;
+  border-radius: 5px;
+  background-color:rgba(0, 0, 0, 0.5); 
+  padding: 0.4px;
+  padding-left: 5.5px;
+  padding-right: 5.5px; 
 }

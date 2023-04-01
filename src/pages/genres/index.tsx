@@ -11,6 +11,12 @@ import Poster from '../../components/poster';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import ArrowScroll from '../../components/arrowScroll';
+import { useDispatch } from 'react-redux';
+import { fetchGenres } from '../../redux/slicesReducers/genresSlice';
+import { AnyAction, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
+
 
 interface currentPoster {
   index?: number;
@@ -30,15 +36,23 @@ interface formattedGenre extends Genre {
 
 
 export default function Genres() {
+  const { genreList, loading } = useSelector((state: RootState) => state.genreSlice)
+  const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
   const navigate = useNavigate();
-  const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
   const [listGenres, setListGenres] = React.useState<Genre[]>([]);
+  const [listFormattedGenres, setListFormattedGenres] = React.useState<formattedGenre[]>([]);
   const [currentMoviePoster, setCurrentMoviePoster] = React.useState<currentPoster>({ cover: defaultImage });
   const [showScrollBtn, setShowScrollBtn] = React.useState(false);
 
   React.useEffect(() => {
-    getGenresAndFormtting()
+    dispatch(fetchGenres());
   }, [])
+
+  React.useEffect(() => {
+    if (loading === 'succeeded') {
+      getGenresAndFormtting()
+    }
+  }, [loading])
 
   React.useEffect(() => {
     const periodicGetRandomMoviePostSubscriber = setInterval(() => {
@@ -60,20 +74,18 @@ export default function Genres() {
   }, [])
 
 
-  function scrollToTop(){
-    window.scrollTo(0,0); 
+  function scrollToTop() {
+    window.scrollTo(0, 0);
   }
 
   async function getGenresAndFormtting() {
-    const { data: { genres } } = await api
-      .get("/genre/movie/list?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
-
 
     const { data: { results } } = await api
       .get("/movie/popular?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
 
 
-    const formattedGenres = genres.map(({ id, name }: Genre) => {
+
+    const formattedGenres = genreList.map(({ id, name }: Genre) => {
       const foundMovieByGenre = results.find((movie: any) => movie.genre_ids.find((genreId: number) => genreId === id))
       return {
         id,
@@ -89,11 +101,16 @@ export default function Genres() {
     setListFormattedGenres(formattedGenres)
     setListGenres(formattedGenres)
 
-
   }
   function searchCategory({ target }: any) {
     const searchTerm = (target.value as string).normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '');
-    const resultSearch = listGenres.filter((category: Genre) => category.name.normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '').toLocaleUpperCase().includes(searchTerm.toLocaleUpperCase()));
+    const resultSearch = listGenres.filter((category: Genre) => category.name
+    .normalize('NFD')
+    .replace(/[^a-zA-Z0-9]*/g, '')
+    .toLocaleUpperCase()
+    .includes(searchTerm.toLocaleUpperCase())
+    );
+    
     setListFormattedGenres(resultSearch);
 
   }
@@ -159,7 +176,7 @@ export default function Genres() {
         </section>
         < Footer />
       </main>
-      {showScrollBtn ? <ArrowScroll onClick={scrollToTop}/> : null}
+      {showScrollBtn ? <ArrowScroll onClick={scrollToTop} /> : null}
     </React.Fragment>
   );
 }

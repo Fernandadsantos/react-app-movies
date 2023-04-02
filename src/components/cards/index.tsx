@@ -12,6 +12,13 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import imageAlternative from '../../assets/cinemaImg.jpeg'
 import './cards.scss';
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux'; 
+import { useDispatch } from 'react-redux';
+import { fetchMovieRecommendationsById } from '../../redux/slicesReducers/recommendations'; 
+import { fetchMovieDetailsById } from '../../redux/slicesReducers/detailsSlice';
+
 
 const theme = createTheme();
 
@@ -51,8 +58,12 @@ const useStyles = makeStyles(() => ({
 export default function MovieDetails({ movie }: { movie: Movie }) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [details, setDetails] = React.useState<IMovieDetails>({} as IMovieDetails)
+    const [details, setDetails] = React.useState<IMovieDetails>({} as IMovieDetails);
     const [recommendations, setRecommendations] = React.useState<Movie[]>([]);
+    const {movieRecommendations, loadingMovieRecommendations} = useSelector((state: RootState) => state.recommendationsSlice);
+    const {movieDetails, loadingDetails} = useSelector((state: RootState) => state.detailsSlice);
+    const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
+
 
     const slideSettings = {
         dots: false,
@@ -75,21 +86,25 @@ export default function MovieDetails({ movie }: { movie: Movie }) {
 
     }
 
-
     async function getDetails() {
-        const { data } = await api
-            .get(`/movie/${movie.id}?&api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR`)
-
-        const { data: { results } } = await api
-            .get(`/movie/${movie.id}/recommendations?&api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR`)
-
-        setDetails(data);
-        setRecommendations(results);
+        setDetails(movieDetails);
+        setRecommendations(movieRecommendations);
     }
 
     React.useEffect(() => {
-        getDetails()
-    }, [])
+        dispatch(fetchMovieRecommendationsById(movie.id));
+      },[])
+    
+    React.useEffect(() => {
+        dispatch(fetchMovieDetailsById(movie.id))
+    },[])
+
+    React.useEffect(() => {
+        if(loadingMovieRecommendations === 'succeeded' 
+        && loadingDetails === 'succeeded'){
+            getDetails()
+        }
+    }, [loadingMovieRecommendations, loadingDetails])
 
     return (
 

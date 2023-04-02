@@ -8,18 +8,18 @@ export const fetchGenres = createAsyncThunk(
         const { data: { genres } } = await api
         .get("/genre/movie/list?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
 
-        return genres
+        return genres;
     }
 )
 interface GenreState {
     genreList: Genre[];
-    loading: string;
+    loadingGenre: string;
 }
 
 const initialState: GenreState = {
     genreList: [],
-    loading: 'idle',
-};
+    loadingGenre: 'idle',
+}
 
 const genreSlice = createSlice({
     name: 'genres',
@@ -31,17 +31,17 @@ const genreSlice = createSlice({
         Builder
         .addCase(fetchGenres.fulfilled, (state, action) => {
             state.genreList = action.payload as Genre[];
-            state.loading = 'succeeded';
+            state.loadingGenre = 'succeeded';
         })
 
         .addCase(fetchGenres.pending, (state) => {
             state.genreList = [];
-            state.loading = 'pending';
+            state.loadingGenre = 'pending';
         })
 
-        .addCase(fetchGenres.rejected, (state, action) => {
+        .addCase(fetchGenres.rejected, (state ) => {
             state.genreList = [];
-            state.loading = 'failed';
+            state.loadingGenre = 'failed';
         })
     }, 
 })

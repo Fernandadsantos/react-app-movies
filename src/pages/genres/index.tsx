@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import { api, getImageRoot } from '../../api/axios';
+import { getImageRoot } from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { Genre } from '../../interfaces';
 import './genres.scss';
@@ -13,9 +13,10 @@ import Footer from '../../components/footer';
 import ArrowScroll from '../../components/arrowScroll';
 import { useDispatch } from 'react-redux';
 import { fetchGenres } from '../../redux/slicesReducers/genresSlice';
-import { AnyAction, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { fetchMovie } from '../../redux/slicesReducers/movieSlice';
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'; 
 
 
 interface currentPoster {
@@ -36,7 +37,8 @@ interface formattedGenre extends Genre {
 
 
 export default function Genres() {
-  const { genreList, loading } = useSelector((state: RootState) => state.genreSlice)
+  const {movie, loadingMovie } = useSelector((state: RootState) => state.movieSlice);
+  const { genreList, loadingGenre } = useSelector((state: RootState) => state.genreSlice)
   const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
   const navigate = useNavigate();
   const [listGenres, setListGenres] = React.useState<Genre[]>([]);
@@ -49,10 +51,15 @@ export default function Genres() {
   }, [])
 
   React.useEffect(() => {
-    if (loading === 'succeeded') {
+    dispatch(fetchMovie());
+  }, [])
+
+  React.useEffect(() => {
+    if (loadingGenre === 'succeeded' 
+    && loadingMovie === 'succeeded' ) {
       getGenresAndFormtting()
     }
-  }, [loading])
+  }, [loadingGenre, loadingMovie])
 
   React.useEffect(() => {
     const periodicGetRandomMoviePostSubscriber = setInterval(() => {
@@ -79,14 +86,8 @@ export default function Genres() {
   }
 
   async function getGenresAndFormtting() {
-
-    const { data: { results } } = await api
-      .get("/movie/popular?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
-
-
-
     const formattedGenres = genreList.map(({ id, name }: Genre) => {
-      const foundMovieByGenre = results.find((movie: any) => movie.genre_ids.find((genreId: number) => genreId === id))
+      const foundMovieByGenre = movie.find((movie: any) => movie.genre_ids.find((genreId: number) => genreId === id))
       return {
         id,
         name,

@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import { api, getImageRoot } from '../../api/axios';
+import { getImageRoot } from '../../api/axios';
 import { useLocation } from 'react-router-dom';
 import { Breadcrumbs } from '@material-ui/core';
 import { Genre, Movie } from '../../interfaces';
@@ -14,7 +14,11 @@ import Poster from '../../components/poster';
 import defaultImage from '../../assets/defaultImg.jpeg';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
-
+import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
+import { RootState } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import { fetchMovie } from '../../redux/slicesReducers/movieSlice';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -64,14 +68,27 @@ export default function Movies() {
   const [moviesToSearch, setMoviesToSearch] = React.useState<Movie[]>([]);
   const [currentMoviePoster, setCurrentMoviePoster] = React.useState<currentPoster>({cover: defaultImage});
   const params = useLocation();
+  const {movie = [], loadingMovie} = useSelector((state: RootState) => state.movieSlice);
+  const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>(); 
+
+  React.useEffect(()=> {
+    if(movie && movie.length === 0 ){
+      dispatch(fetchMovie());
+    }
+  }, [])
 
   React.useEffect(() => {
     if (params?.state) {
       const { state: { id, name } } = params;
       setCurrentCategory({ id, name })
-      getPopularMoviesByGenreId(id);
     }
   }, [params])
+
+  React.useEffect(() => {
+    if (loadingMovie === 'succeeded') {
+      getPopularMoviesByGenreId(currentCategory.id);
+    }
+  }, [loadingMovie, currentCategory.id])
 
   React.useEffect(()=>{ 
    const periodicGetRandomMoviePostSubscriber = setInterval(() => {
@@ -83,10 +100,8 @@ export default function Movies() {
   }, [])
 
   async function getPopularMoviesByGenreId(genreId: number) {
-    const { data: { results } } = await api
-      .get("/movie/popular?api_key=1abb3e68d878be1155d781ce812f80a8&language=pt-BR")
-
-    const filteredMovies = results.filter((movie: any) => movie.genre_ids.includes(genreId));
+   
+    const filteredMovies = movie.filter((movie: any) => movie.genre_ids.includes(genreId));
     setListMovies(filteredMovies);
     setMoviesToSearch(filteredMovies);
     getRandomMovie()

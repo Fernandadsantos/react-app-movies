@@ -1,13 +1,10 @@
 import './poster.scss';
 
-
-
 interface posterProps {
     cover?: string;
     movieTitle?: string;
     movieOverview?: string;
 }
-
 
 function Poster({ cover, movieTitle, movieOverview }: posterProps) {
 

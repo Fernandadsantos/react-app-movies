@@ -16,7 +16,7 @@ import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux'; 
 import { useDispatch } from 'react-redux';
-import { fetchMovieRecommendationsById } from '../../redux/slicesReducers/recommendations'; 
+import { fetchMovieRecommendationsById } from '../../redux/slicesReducers/recommendationsSlice'; 
 import { fetchMovieDetailsById } from '../../redux/slicesReducers/detailsSlice';
 
 

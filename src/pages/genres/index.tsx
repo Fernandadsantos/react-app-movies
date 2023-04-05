@@ -16,7 +16,7 @@ import { fetchGenres } from '../../redux/slicesReducers/genresSlice';
 import { fetchMovie } from '../../redux/slicesReducers/movieSlice';
 import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
-import { useSelector } from 'react-redux'; 
+import { useSelector } from 'react-redux';
 
 
 interface currentPoster {
@@ -37,7 +37,7 @@ interface formattedGenre extends Genre {
 
 
 export default function Genres() {
-  const {movie, loadingMovie } = useSelector((state: RootState) => state.movieSlice);
+  const { movie, loadingMovie } = useSelector((state: RootState) => state.movieSlice);
   const { genreList, loadingGenre } = useSelector((state: RootState) => state.genreSlice)
   const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
   const navigate = useNavigate();
@@ -55,8 +55,8 @@ export default function Genres() {
   }, [])
 
   React.useEffect(() => {
-    if (loadingGenre === 'succeeded' 
-    && loadingMovie === 'succeeded' ) {
+    if (loadingGenre === 'succeeded'
+      && loadingMovie === 'succeeded') {
       getGenresAndFormtting()
     }
   }, [loadingGenre, loadingMovie])
@@ -106,12 +106,12 @@ export default function Genres() {
   function searchCategory({ target }: any) {
     const searchTerm = (target.value as string).normalize('NFD').replace(/[^a-zA-Z0-9]*/g, '');
     const resultSearch = listGenres.filter((category: Genre) => category.name
-    .normalize('NFD')
-    .replace(/[^a-zA-Z0-9]*/g, '')
-    .toLocaleUpperCase()
-    .includes(searchTerm.toLocaleUpperCase())
+      .normalize('NFD')
+      .replace(/[^a-zA-Z0-9]*/g, '')
+      .toLocaleUpperCase()
+      .includes(searchTerm.toLocaleUpperCase())
     );
-    
+
     setListFormattedGenres(resultSearch);
 
   }
@@ -153,7 +153,6 @@ export default function Genres() {
         <section className='poster-genre'>
           <Poster  {...currentMoviePoster} />
         </section>
-
         <section className='sectionCards' >
           <Container maxWidth="md">
             {/* End hero unit */}

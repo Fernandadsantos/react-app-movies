@@ -1,24 +1,35 @@
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Checkbox } from "@material-ui/core";
-import "./login";
+import DefaultInput from "../../components/input";
+import "./login.scss"; 
+
+
 
 const Login = () => {
 
-    const {register, control, handleSubmit: onSubmit, watch, formState } = useForm();
-    const handleSubmit = (data: any) => {
+    const { control, handleSubmit: onSubmit, setValue } = useForm();
+    const handleSubmit = () => {}
 
-
-    }
+    React.useEffect(()=>{
+       
+    },[])
 
     return (
         <form onSubmit={onSubmit(handleSubmit)} >
-            <Controller 
-                name="checkbox"
+            <Controller
+                name="Email"
                 control={control}
                 rules={{ required: true }}
-                render={({ field }) => <Checkbox {...field} />}
+                render={({ field: { value, name, onChange } }) =>
+                    <DefaultInput
+                        type={"email"}
+                        inputName={name}
+                        value={value}
+                        onChange={onChange}
+                    />
+                }
             />
-            
+
         </form>
     )
 }

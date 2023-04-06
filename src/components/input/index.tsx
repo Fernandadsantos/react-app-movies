@@ -6,9 +6,10 @@ interface inputProps {
     inputName: string;
     onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
     value: string;
+    placeholder: string;
 }
 
-function DefaultInput({ type, inputName, value, onChange }: inputProps) {
+function DefaultInput({ type, inputName, value, onChange,placeholder }: inputProps) {
 
     return (
         <input
@@ -17,6 +18,7 @@ function DefaultInput({ type, inputName, value, onChange }: inputProps) {
             name={inputName}
             value={value}
             onChange={onChange}
+            placeholder={placeholder}
         />
     )
 

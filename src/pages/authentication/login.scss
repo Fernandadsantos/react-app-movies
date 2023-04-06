@@ -1,0 +1,50 @@
+body{
+    background-color: #ddd6d6;
+}
+.formSection{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+.formLogin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 180px;  
+    background-color: #e9e4e4;  
+    padding: 40px; 
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.loginInputs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;  
+    top: 70px;
+}
+.userIcon{ 
+    width: 180px;
+    height: 180px; 
+}
+.forgotPassword{
+    padding-top: 8px;
+}
+.forgotPassword a{ 
+    color: #1f1d1dd0;
+    text-decoration-color:none;
+}
+.logo{
+    position: absolute;
+    top: 40px;
+    font-size: 50px;
+    color: #000;
+    letter-spacing: 2px;
+
+}
+.footerLogin{
+    position: absolute;
+    bottom: 0;
+}

@@ -1,0 +1,17 @@
+.formContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title{ 
+    position: absolute;
+    top: 40px;
+    font-size: 50px;
+    color: #000;
+    letter-spacing: 2px;
+}
+.userIcon{
+    width: 150px;
+    height: 150px;
+}

@@ -1,7 +1,10 @@
 import * as React from 'react';
 import Genres from './pages/genres';
 import Movies from './pages/movies';
-import Login  from './pages/authentication'
+import Login  from './pages/authentication/login'
+import RecoverPassword from './pages/authentication/recoverPassword';
+import RegisterUser from './pages/authentication/register';
+import NewPassword from './pages/authentication/newPassword';
 import './App.scss'; 
 import {
   createBrowserRouter,
@@ -20,7 +23,19 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
-  }
+  },
+  {
+    path: "/cadastrar",
+    element: <RegisterUser />,
+  },
+  {
+    path: "/recuperarSenha",
+    element: <RecoverPassword />,
+  },
+  {
+    path: "/novaSenha",
+    element: <NewPassword />,
+  },
 ]);
 
 

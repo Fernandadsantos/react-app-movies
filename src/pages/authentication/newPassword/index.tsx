@@ -2,23 +2,17 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import "./newPassword.scss";
-import png from '../../../assets/trancar.png';
 import Footer from "../../../components/footer";
-
-
 
 const NewPassword = () => {
 
     const { control, handleSubmit: onSubmit, setValue } = useForm();
     const handleSubmit = () => { }
 
-
-
     return (
         <section className="formSection">
-            <h1 className="title">Definir nova senha</h1>
             <div className="formLogin">
-                <img src={png} alt="icone" className="iconPadlock" />
+                <h1 className="title">Definir nova senha</h1>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputs">
                         <Controller
@@ -45,7 +39,7 @@ const NewPassword = () => {
                                     inputName={name}
                                     value={value}
                                     onChange={onChange}
-                                    placeholder="confirmar nova senha"
+                                    placeholder="Confirmar nova senha"
                                 />
                             }
                         /> 

@@ -4,33 +4,30 @@ body {
     background-repeat:  no-repeat;   
     background-attachment: fixed; 
     background-size: cover;  
-    min-width: 400px;
-    min-height: 600px;
 } 
 
-.loginForm{ 
-    display: flex; 
+.loginSection{
+    display: flex;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
 }
-.screen{
+.login{
     display: flex; 
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    position: absolute;
-    top: 180px; 
-    padding: 50px; 
+    padding: 50px;
     gap: 10px;
     border-radius: 5px; 
     background-color: rgba(255, 255, 255, 0.205);
 }
-.login { 
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-} 
 .forgotPassword {
+    margin-top: 10px;
     font-size: 15px;
 }
 
@@ -53,7 +50,7 @@ body {
 
 .footerLogin {   
     bottom: 0;
-    margin-top: 30px;
+    margin-top: 70px;
 }
 
 .btn {

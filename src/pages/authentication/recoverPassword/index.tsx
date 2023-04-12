@@ -2,7 +2,6 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import Footer from "../../../components/footer";
-import png from '../../../assets/senha.png'
 import './recoverPassword.scss';
 
 const RecoverPassword = () => {

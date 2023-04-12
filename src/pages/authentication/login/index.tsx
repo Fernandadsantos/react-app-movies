@@ -23,57 +23,56 @@ const Login = () => {
     }
 
     return (
-        <section>
-            <div className="loginForm">
-                <div className="screen">
+            <section className="loginSection">
+                <div className="login">
                     <h1 className="titleL">Entrar</h1>
-                    <Controller
-                        name="Email"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, name, onChange } }) =>
-                            <DefaultInput
-                                type={"email"}
-                                inputName={name}
-                                value={value}
-                                onChange={onChange}
-                                placeholder="Email"
-                            />
-                        }
-                    />
-                    <Controller
-                        name="Senha"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field: { value, name, onChange } }) =>
-                            <DefaultInput
-                                type={"Senha"}
-                                inputName={name}
-                                value={value}
-                                onChange={onChange}
-                                placeholder="Senha"
-                            />
-                        }
-                    />
-                    <span className="forgotPassword">
-                        <a href="/recuperarSenha">Esqueci minha senha</a>
-                    </span>
-                    <button type="submit" className="btn" id="btnSignIn" onClick={signIn}>
-                        Entrar
-                    </button>
-                    <div className="subscribe">
-                        <p className="content">Ainda não tem conta?</p>
-                        <span >
-                            <a href="/cadastrar" className="linkSubscribe">Cadastre-se</a>
+                    <form onSubmit={onSubmit(handleSubmit)} >
+                        <div className="formContent">
+                        <Controller
+                            name="Email"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field: { value, name, onChange } }) =>
+                                <DefaultInput
+                                    type={"email"}
+                                    inputName={name}
+                                    value={value}
+                                    onChange={onChange}
+                                    placeholder="Email"
+                                />
+                            }
+                        />
+                        <Controller
+                            name="Senha"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field: { value, name, onChange } }) =>
+                                <DefaultInput
+                                    type={"Senha"}
+                                    inputName={name}
+                                    value={value}
+                                    onChange={onChange}
+                                    placeholder="Senha"
+                                />
+                            }
+                        />
+                        <span className="forgotPassword">
+                            <a href="/recuperarSenha">Esqueci minha senha</a>
                         </span>
-                    </div>
-
-                </div>
+                        <button type="submit" className="btn" id="btnSignIn" onClick={signIn}>
+                            Entrar
+                        </button>
+                        <div className="subscribe">
+                            <p className="content">Ainda não tem conta?</p>
+                            <a href="/cadastrar" className="linkSubscribe">Cadastre-se</a>
+                        </div>
+                        </div>
+                    </form>
                 <div className="footerLogin">
                     <Footer />
                 </div>
-            </div>
-        </section>
+                </div>
+            </section>
     )
 }
 

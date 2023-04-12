@@ -1,10 +1,15 @@
+.formSection{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
 .formRegister{
     display: flex; 
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    position: absolute;
-    top: 180px; 
     padding-bottom:50px ;
     padding-top:50px ;
     padding-right: 30px;
@@ -44,11 +49,26 @@
     align-items: center;
 }
 .icon{ 
-    width:40px;
-    height: 40px;
+    width:32px;
+    height: 32px;
+    padding-top: 20px;
 }
-.userName{
+.userName, .userEmail, .userPassword{
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 15px;
+}
+.loginRef{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.loginRef a {
+    font-size: 20px;
+    color:#70a1ce;
+    text-decoration: none;
+}
+.loginRef:hover a{
+    text-decoration: underline;
 }

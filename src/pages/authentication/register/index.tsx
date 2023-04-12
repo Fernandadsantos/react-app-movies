@@ -73,6 +73,10 @@ const RegisterUser = () => {
                     <button type="submit" className="btnRegister">
                         Cadastrar
                     </button>
+                    <div className="loginRef">
+                        <p >ja tem uma conta? </p>
+                        <a href="/login">  Acesse aqui</a>    
+                     </div>
                 </form>
             </div>
             <div className="footer">

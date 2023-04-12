@@ -1,76 +1,102 @@
-body{
-    background-color: #ddd6d6;
-}
-.formSection{
-    display: flex;
-    justify-content: center;
-    align-items: center; 
+html,
+body {
+    background-image: url(https://assets.nflxext.com/ffe/siteui/acquisition/login/login-the-crown_2-1500x1000.jpg) ;
+    background-repeat:  no-repeat;   
+    background-attachment: fixed; 
+    background-size: cover;  
+    min-width: 400px;
+    min-height: 600px;
+} 
 
-}
-.formLogin{
-    display: flex;
-    justify-content: center;
+.loginForm{ 
+    display: flex; 
     align-items: center;
     flex-direction: column;
-    position: absolute;
-    top: 180px;  
-    background-color: #e9e4e4;  
-    padding: 40px; 
-    border-radius: 12px;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
-.loginInputs{
-    display: flex;
+.screen{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    top: 180px; 
+    padding: 50px; 
+    gap: 10px;
+    border-radius: 5px; 
+    background-color: rgba(255, 255, 255, 0.205);
+}
+.login { 
+    display: flex; 
     justify-content: center;
     align-items: center;
-    flex-direction: column;  
-    top: 70px;
+} 
+.forgotPassword {
+    font-size: 15px;
 }
-.userIcon{ 
-    width: 180px;
-    height: 180px; 
+
+.forgotPassword a {
+    color: #d6d1d1be;
+    text-decoration-color: none;
+    text-decoration: none;
 }
-.forgotPassword{
-    padding-top: 8px;
+.forgotPassword:hover{
+    text-decoration:underline;
+    color: #c5b8b8be;
 }
-.forgotPassword a{ 
-    color: #1f1d1dd0;
-    text-decoration-color:none;
-}
-.title{
-    position: absolute;
-    top: 40px;
+
+.titleL{ 
     font-size: 50px;
-    color: #000;
+    color: #f0eeee;
     letter-spacing: 2px;
 
 }
-.footerLogin{
-    position: absolute;
-    bottom: 0; 
-    right: 0;
-    left: 0; 
-} 
-.btnFinish{
-    background-color: #366aaf86;
-    color: #000;
-    border-radius: 10px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: 100px;
-    height: 30px;
-    border: none;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 2px 4px;
-    letter-spacing: 1px;
+
+.footerLogin {   
+    bottom: 0;
+    margin-top: 30px;
 }
 
-.btnFinish:active{
-    box-shadow: none;
+.btn {
+    background-color: #366999;
+    font-size: 18px;
+    color: #f1ecec;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 130px;
+    height: 40px;
+    border: solid 0.1px #31303052;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.377) 0px 5px 9px;
+    letter-spacing: 1px;
+     
+} 
+.btn:active {
+    background-color: #36699996;
+    box-shadow: none; 
 }
-.formContent{
+
+.formContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.content {
+    color: #eee8e8e3;
+}
+.subscribe{ 
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    gap: 15px;
+}
+.linkSubscribe{
+    font-size: 20px;
+    color:#70a1ce;
+    text-decoration: none;
+}
+.linkSubscribe:hover{
+    text-decoration:underline;
 }

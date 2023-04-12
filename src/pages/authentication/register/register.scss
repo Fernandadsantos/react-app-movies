@@ -1,17 +1,54 @@
-.formContent{
-    display: flex;
+.formRegister{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
+    position: absolute;
+    top: 180px; 
+    padding-bottom:50px ;
+    padding-top:50px ;
+    padding-right: 30px;
+    padding-left: 30px;
+    gap: 10px;
+    border-radius: 5px; 
+    background-color: rgba(255, 255, 255, 0.205);
+}
+.titleRegister{  
+    top: 40px;
+    font-size: 50px;
+    color: #f0eeee;
+    letter-spacing: 2px;
+}
+.btnRegister{
+    background-color: #366999;
+    font-size: 18px;
+    color: #f1ecec;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 130px;
+    height: 40px;
+    border: solid 0.1px #31303052;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.377) 0px 5px 9px;
+    letter-spacing: 1px;
+     
+} 
+
+.btnRegister:active {
+    box-shadow: none; 
+    background-color: #36699996;
+}
+.inputs{ 
     justify-content: center;
     align-items: center;
 }
-.title{ 
-    position: absolute;
-    top: 40px;
-    font-size: 50px;
-    color: #000;
-    letter-spacing: 2px;
+.icon{ 
+    width:40px;
+    height: 40px;
 }
-.userIcon{
-    width: 150px;
-    height: 150px;
+.userName{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

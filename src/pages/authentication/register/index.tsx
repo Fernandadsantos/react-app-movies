@@ -1,7 +1,9 @@
 import { useForm, Controller } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import Footer from "../../../components/footer";
-import png from '../../../assets/forma.png';
+import user from '../../../assets/user.png';
+import email from '../../../assets/o-email.png';
+import Password  from "../../../assets/trancar.png";
 import './register.scss';
 
 
@@ -12,25 +14,29 @@ const RegisterUser = () => {
 
     return (
         <section className="formSection">
-            <h1 className="title">Cadastrar</h1>
-            <div className="formLogin"> 
-            <img src={png} alt="usuario" className="userIcon" />
+            <div className="formRegister">
+                <h1 className="titleRegister">Cadastro</h1>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputs">
-                        <Controller
-                            name="name"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field: { value, name, onChange } }) =>
-                                <DefaultInput
-                                    type={"name"}
-                                    inputName={name}
-                                    value={value}
-                                    onChange={onChange}
-                                    placeholder="Nome"
-                                />
-                            }
-                        />
+                        <div className="userName">
+                            <img src={user} alt="usuario" className="icon"/>
+                            <Controller
+                                name="name"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { value, name, onChange } }) =>
+                                    <DefaultInput
+                                        type={"name"}
+                                        inputName={name}
+                                        value={value}
+                                        onChange={onChange}
+                                        placeholder="Nome"
+                                    />
+                                }
+                            />
+                        </div>
+                        <div className="userEmail">
+                            <img src={email} alt="" className="icon"/>
                         <Controller
                             name="Email"
                             control={control}
@@ -45,6 +51,9 @@ const RegisterUser = () => {
                                 />
                             }
                         />
+                        </div>
+                        <div className="userPassword">
+                            <img src={Password} alt="" className="icon"/>
                         <Controller
                             name="password"
                             control={control}
@@ -59,9 +68,10 @@ const RegisterUser = () => {
                                 />
                             }
                         />
+                        </div>
                     </div>
-                    <button type="submit" className="btnFinish">
-                        concluir
+                    <button type="submit" className="btnRegister">
+                        Cadastrar
                     </button>
                 </form>
             </div>

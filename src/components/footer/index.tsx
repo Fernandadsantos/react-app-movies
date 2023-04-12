@@ -18,7 +18,7 @@ function Copyright() {
 
 function Footer() {
     return (
-        <footer className='footer'>
+        <footer className='footerDefault'>
             <Copyright/>
         </footer >
     )

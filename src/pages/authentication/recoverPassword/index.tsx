@@ -11,12 +11,11 @@ const RecoverPassword = () => {
 
     return (
         <section className="formSection">
-            <h1 className="title">Redefinir senha</h1>
-            <div className="formLogin">
-                <img src={png} alt="" className="icon" />
-                <p className="inform">informe o
+            <div className="formLoginPass">
+                <h1 className="titlePass">Redefinir senha</h1>
+                <p className="inform">Informe o
                     email usado no cadastro e lhe enviaremos um
-                    link com as instruções para redefinir sua senha. </p>
+                    link com instruções para redefinir sua senha. </p>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputEmail">
                         <Controller
@@ -34,8 +33,8 @@ const RecoverPassword = () => {
                             }
                         />
                     </div>
-                    <button type="submit" className="btnFinish">
-                        concluir
+                    <button type="submit" className="btnPassword">
+                        Enviar
                     </button>
                 </form>
             </div>

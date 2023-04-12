@@ -49,7 +49,7 @@ const NewPassword = () => {
                                 />
                             }
                         /> 
-                        <button type="submit" className="buttonSuccess">
+                        <button type="submit" className="btnFinish">
                             concluir
                         </button>
                     </div>

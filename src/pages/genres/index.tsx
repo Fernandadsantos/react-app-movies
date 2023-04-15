@@ -149,7 +149,7 @@ export default function Genres() {
     <React.Fragment>
       <CssBaseline />
       <main className='mainPage'>
-        <Header title='Catalogo' onChange={searchCategory} />
+        <Header title='Catalogo' onChange={searchCategory}/>
         <section className='poster-genre'>
           <Poster  {...currentMoviePoster} />
         </section>

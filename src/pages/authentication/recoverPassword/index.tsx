@@ -8,6 +8,10 @@ const RecoverPassword = () => {
     const { control, handleSubmit: onSubmit, setValue } = useForm();
     const handleSubmit = () => { }
 
+    React.useEffect(() => {
+
+    }, [])
+    
     return (
         <section className="formSection">
             <div className="formLoginPass">

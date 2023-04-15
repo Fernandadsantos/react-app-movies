@@ -1,16 +1,24 @@
-import { useForm, Controller } from "react-hook-form";
+import React from "react";
+import { useForm, Controller, FieldValues } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import Footer from "../../../components/footer";
-import user from '../../../assets/user.png';
-import email from '../../../assets/o-email.png';
-import Password  from "../../../assets/trancar.png";
 import './register.scss';
 
 
-
 const RegisterUser = () => {
+    const auth = getAuth();
     const { control, handleSubmit: onSubmit, setValue } = useForm();
-    const handleSubmit = () => { }
+    const handleSubmit = (data: FieldValues) => {
+    createUserWithEmailAndPassword(auth, email, password)
+        
+    }
+
+
+
+
+    React.useEffect(() => {
+
+    }, [])
 
     return (
         <section className="formSection">
@@ -18,8 +26,6 @@ const RegisterUser = () => {
                 <h1 className="titleRegister">Cadastro</h1>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputs">
-                        <div className="userName">
-                            <img src={user} alt="usuario" className="icon"/>
                             <Controller
                                 name="name"
                                 control={control}
@@ -34,9 +40,6 @@ const RegisterUser = () => {
                                     />
                                 }
                             />
-                        </div>
-                        <div className="userEmail">
-                            <img src={email} alt="" className="icon"/>
                         <Controller
                             name="Email"
                             control={control}
@@ -51,9 +54,6 @@ const RegisterUser = () => {
                                 />
                             }
                         />
-                        </div>
-                        <div className="userPassword">
-                            <img src={Password} alt="" className="icon"/>
                         <Controller
                             name="password"
                             control={control}
@@ -68,13 +68,12 @@ const RegisterUser = () => {
                                 />
                             }
                         />
-                        </div>
                     </div>
                     <button type="submit" className="btnRegister">
                         Cadastrar
                     </button>
                     <div className="loginRef">
-                        <p >ja tem uma conta? </p>
+                        <p >Já tem uma conta? </p>
                         <a href="/login">  Acesse aqui</a>    
                      </div>
                 </form>

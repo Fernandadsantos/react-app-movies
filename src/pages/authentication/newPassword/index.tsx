@@ -3,6 +3,15 @@ import { useForm, Controller } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import "./newPassword.scss";
 import Footer from "../../../components/footer";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+    newPassword: yup.string()
+    .required('Informe sua nova senha.')
+    .min(6, 'A senha deve conter no mínimo 6 caracteres.')
+    .max(12, 'A senha deve conter no máximo 12 caracteres.'),
+
+})
 
 const NewPassword = () => {
 
@@ -20,12 +29,12 @@ const NewPassword = () => {
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputs">
                         <Controller
-                            name="Senha"
+                            name="newPassword"
                             control={control}
                             rules={{ required: true }}
                             render={({ field: { value, name, onChange } }) =>
                                 <DefaultInput
-                                    type={"Senha"}
+                                    type={"password"}
                                     inputName={name}
                                     value={value}
                                     onChange={onChange}
@@ -34,12 +43,12 @@ const NewPassword = () => {
                             }
                         />
                         <Controller
-                            name="Senha"
+                            name="password"
                             control={control}
                             rules={{ required: true }}
                             render={({ field: { value, name, onChange } }) =>
                                 <DefaultInput
-                                    type={"Senha"}
+                                    type={"confirmNewPassword"}
                                     inputName={name}
                                     value={value}
                                     onChange={onChange}

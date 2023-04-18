@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add hookform/resolvers yup
+  /usr/local/bin/node /usr/local/bin/yarn add yup
 
 PATH: 
-  /Library/Frameworks/Python.framework/Versions/3.8/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Library/Frameworks/Python.framework/Versions/3.8/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/Users/hermanyo_h/Library/Android/sdk//tools:/Users/hermanyo_h/Library/Android/sdk//platform-tools:/Users/hermanyo_h/Library/Android/sdk//tools:/Users/hermanyo_h/Library/Android/sdk//platform-tools
+  /Library/Frameworks/Python.framework/Versions/3.8/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/hermanyo_h/Library/Android/sdk//tools:/Users/hermanyo_h/Library/Android/sdk//platform-tools
 
 Yarn version: 
   1.22.19

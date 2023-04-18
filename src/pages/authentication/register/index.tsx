@@ -5,10 +5,11 @@ import Footer from "../../../components/footer";
 import './register.scss';
 import { auth } from "../../../api/firebase";
 import { updateProfile, createUserWithEmailAndPassword, User } from "firebase/auth";
+ 
 import {translateErrorMessages} from '../../../utils/format'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import PopupAlert from "../../../components/popupAlert";
+import PopupAlert from "../../../components/popupAlert"; 
 
 const schema = yup.object({
     name: yup.string()
@@ -25,7 +26,14 @@ const schema = yup.object({
 }).required();
 type FormData = yup.InferType<typeof schema>;
 
+interface FirebaseAuthError  {
+    code: string;
+    message: string;
+}
+
+
 const RegisterUser = () => {
+    const [messagePopup, setMessagePopup] = React.useState('')
     const { control, handleSubmit: onSubmit, formState: {errors} } = useForm<FormData>({
         resolver: yupResolver(schema)
       });
@@ -43,10 +51,19 @@ const RegisterUser = () => {
 
             }
         }
-        catch (error) {
-            const errorMessage = translateErrorMessages(`${error}`);
+        catch (error: any) {
+            setMessagePopup(translateErrorMessages(((error as unknown) as FirebaseAuthError ).code as string));
         }
     }
+
+    function popUp(){
+        return(
+            <div>
+                <PopupAlert message={messagePopup}/>
+            </div>
+        )
+    }
+
 
     React.useEffect(() => {
 
@@ -111,7 +128,7 @@ const RegisterUser = () => {
                             <p>{errors.password?.message}</p>
                         </div>
                     </div>
-                    <button type="submit" className="btnRegister"  >
+                    <button type="submit" className="btnRegister" onClick={setMessagePopup} >
                         Cadastrar
                     </button>
                     <div className="loginRef">

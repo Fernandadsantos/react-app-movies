@@ -14,12 +14,7 @@ const Login = () => {
     React.useEffect(() => {
 
     }, [])
-
     
-
-
-    
-
     return (
             <section className="loginSection">
                 <div className="login">

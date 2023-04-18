@@ -1,10 +1,9 @@
 import React from "react";
-import Alert from "react-popup-alert";
-import { translateErrorMessages } from "../../utils/format";
+import Alert from "react-popup-alert"; 
 
 
 
-function PopupAlert(errorMessage: string) {
+function PopupAlert(message: string) {
 
     const [alert, setAlert] = React.useState({
         type: 'error',
@@ -29,7 +28,7 @@ function PopupAlert(errorMessage: string) {
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}>
-                <button onClick={() => {onShowAlert('erro', errorMessage)}}> 
+                <button onClick={() => {onShowAlert('erro', message)}}> 
                 </button>
             </div>
             <Alert

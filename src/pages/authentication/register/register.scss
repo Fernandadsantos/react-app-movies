@@ -12,9 +12,9 @@
     flex-direction: column;
     padding-bottom:50px ;
     padding-top:50px ;
-    padding-right: 30px;
-    padding-left: 30px;
-    gap: 10px;
+    padding-right: 50px;
+    padding-left: 50px;
+    gap: 20px;
     border-radius: 5px; 
     background-color: rgba(255, 255, 255, 0.205);
 }
@@ -71,4 +71,7 @@
 }
 .loginRef:hover a{
     text-decoration: underline;
+}
+.controller p{
+    font-size: 15px;
 }

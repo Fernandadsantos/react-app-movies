@@ -3,19 +3,21 @@ import { useForm, Controller } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import "./newPassword.scss";
 import Footer from "../../../components/footer";
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-const schema = yup.object().shape({
+const schema = yup.object({
     newPassword: yup.string()
-    .required('Informe sua nova senha.')
-    .min(6, 'A senha deve conter no mínimo 6 caracteres.')
-    .max(12, 'A senha deve conter no máximo 12 caracteres.'),
-
-})
+        .min(6, 'A senha deve conter no mínimo 6 caracteres.')
+        .max(12, 'A senha deve conter no máximo 12 caracteres.')
+        .required('Informe sua nova senha.'),
+}).required();
+type FormData = yup.InferType<typeof schema>;
 
 const NewPassword = () => {
-
-    const { control, handleSubmit: onSubmit, setValue } = useForm();
+    const { control, handleSubmit: onSubmit, setValue } = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
     const handleSubmit = () => { }
 
     React.useEffect(() => {
@@ -43,19 +45,19 @@ const NewPassword = () => {
                             }
                         />
                         <Controller
-                            name="password"
+                            name="newPassword"
                             control={control}
                             rules={{ required: true }}
                             render={({ field: { value, name, onChange } }) =>
                                 <DefaultInput
-                                    type={"confirmNewPassword"}
+                                    type={"password"}
                                     inputName={name}
                                     value={value}
                                     onChange={onChange}
                                     placeholder="Confirmar nova senha"
                                 />
                             }
-                        /> 
+                        />
                         <button type="submit" className="btnFinish">
                             concluir
                         </button>

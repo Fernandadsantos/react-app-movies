@@ -7,22 +7,21 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 const schema = yup.object({
-    newPassword: yup.string()
+    password: yup.string()
         .min(6, 'A senha deve conter no mínimo 6 caracteres.')
         .max(12, 'A senha deve conter no máximo 12 caracteres.')
         .required('Informe sua nova senha.'),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('password')], 'As senhas devem ser iguais')
+        .required('Confirme sua nova senha.'),
 }).required();
 type FormData = yup.InferType<typeof schema>;
 
 const NewPassword = () => {
-    const { control, handleSubmit: onSubmit, setValue } = useForm<FormData>({
+    const { control, handleSubmit: onSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(schema)
     });
     const handleSubmit = () => { }
-
-    React.useEffect(() => {
-
-    }, [])
 
     return (
         <section className="formSection">
@@ -30,34 +29,44 @@ const NewPassword = () => {
                 <h1 className="title">Definir nova senha</h1>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputs">
-                        <Controller
-                            name="newPassword"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field: { value, name, onChange } }) =>
-                                <DefaultInput
-                                    type={"password"}
-                                    inputName={name}
-                                    value={value}
-                                    onChange={onChange}
-                                    placeholder="Nova senha"
-                                />
-                            }
-                        />
-                        <Controller
-                            name="newPassword"
-                            control={control}
-                            rules={{ required: true }}
-                            render={({ field: { value, name, onChange } }) =>
-                                <DefaultInput
-                                    type={"password"}
-                                    inputName={name}
-                                    value={value}
-                                    onChange={onChange}
-                                    placeholder="Confirmar nova senha"
-                                />
-                            }
-                        />
+                        <div>
+                            <Controller
+                                name="password"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { value, name, onChange } }) =>
+                                    <DefaultInput
+                                        type={"password"}
+                                        inputName={name}
+                                        value={value}
+                                        onChange={onChange}
+                                        placeholder="Nova senha"
+                                    />
+                                }
+                            />
+                            <p className="error">
+                                {errors.password?.message}
+                            </p>
+                        </div>
+                        <div>
+                            <Controller
+                                name="confirmPassword"
+                                control={control}
+                                rules={{ required: true }}
+                                render={({ field: { value, name, onChange } }) =>
+                                    <DefaultInput
+                                        type={"password"}
+                                        inputName={name}
+                                        value={value}
+                                        onChange={onChange}
+                                        placeholder="Confirmar nova senha"
+                                    />
+                                }
+                            />
+                            <p className="error">
+                                {errors.confirmPassword?.message}
+                            </p>
+                        </div>
                         <button type="submit" className="btnFinish">
                             concluir
                         </button>

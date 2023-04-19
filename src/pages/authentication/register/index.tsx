@@ -8,6 +8,7 @@ import { updateProfile, createUserWithEmailAndPassword, User } from "firebase/au
 import { translateErrorMessages } from '../../../utils/format'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 import PopupAlert from "../../../components/popupAlert";
 
 const schema = yup.object({
@@ -32,6 +33,7 @@ interface FirebaseAuthError {
 
 
 const RegisterUser = () => { 
+    const navigate = useNavigate();
     const [alert, setAlert] = React.useState({
         type: '',
         text: '',
@@ -50,8 +52,10 @@ const RegisterUser = () => {
                     ...auth.currentUser,
                     displayName: name
                 });
-                return
 
+                navigate("/");
+
+                return
             }
         }
         catch (error: any) { 
@@ -75,11 +79,7 @@ const RegisterUser = () => {
         })
 
     }  
-    React.useEffect(() => {
-
-    }, [])
-
-
+   
     return (
         <section className="formSection">
             <PopupAlert {...alert} onClosePress={onCloseAlert}/>

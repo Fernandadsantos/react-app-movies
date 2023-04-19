@@ -3,9 +3,20 @@ import { useForm, Controller } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import Footer from "../../../components/footer";
 import './recoverPassword.scss';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const schema = yup.object({
+    email: yup.string()
+        .email('Por favor informe um e-mail válido.')
+        .required('Por favor informe o e-mail usado no cadastro da conta que deseja recuperar.'), 
+}).required();
+type FormData = yup.InferType<typeof schema>;
 
 const RecoverPassword = () => {
-    const { control, handleSubmit: onSubmit, setValue } = useForm();
+    const { control, handleSubmit: onSubmit, formState:{errors}} = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
     const handleSubmit = () => { }
 
     React.useEffect(() => {
@@ -22,7 +33,7 @@ const RecoverPassword = () => {
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputEmail">
                         <Controller
-                            name="Email"
+                            name="email"
                             control={control}
                             rules={{ required: true }}
                             render={({ field: { value, name, onChange } }) =>
@@ -35,6 +46,7 @@ const RecoverPassword = () => {
                                 />
                             }
                         />
+                        <p>{errors.email?.message}</p>
                     </div>
                     <button type="submit" className="btnPassword">
                         Enviar

@@ -3,26 +3,36 @@ import { useForm, Controller } from "react-hook-form";
 import DefaultInput from "../../../components/input";
 import "./login.scss";
 import Footer from "../../../components/footer";
-// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
+const schema = yup.object({
+    email: yup.string()
+        .email('Por favor informe o e-mail usasdo no cadastro.')
+        .required('Por favor informe o e-mail usado no cadastro.'),
+    password: yup.string()
+        .required('informe a senha usada no cadastro.')
+}).required();
+type FormData = yup.InferType<typeof schema>;
 
 const Login = () => {
-    // const auth = getAuth();
-    const { control, handleSubmit: onSubmit, setValue } = useForm();
-    const handleSubmit = () => { }
+    const navigate = useNavigate();
+    const { control, handleSubmit: onSubmit, formState: { errors } } = useForm<FormData>({
+        resolver: yupResolver(schema)
+    });
+    const handleSubmit = async (data: FormData) => { }
 
-    React.useEffect(() => {
 
-    }, [])
-    
     return (
-            <section className="loginSection">
-                <div className="login">
-                    <h1 className="titleL">Entrar</h1>
-                    <form onSubmit={onSubmit(handleSubmit)} >
-                        <div className="formContent">
+        <section className="loginSection">
+            <div className="login">
+                <h1 className="titleL">Entrar</h1>
+                <form onSubmit={onSubmit(handleSubmit)} >
+                    <div className="formContent">
+                        <div>
                             <Controller
-                                name="Email"
+                                name="email"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field: { value, name, onChange } }) =>
@@ -35,13 +45,18 @@ const Login = () => {
                                     />
                                 }
                             />
+                            <p className="errorMessage">
+                                {errors.email?.message}
+                            </p>
+                        </div>
+                        <div>
                             <Controller
-                                name="Senha"
+                                name="password"
                                 control={control}
                                 rules={{ required: true }}
                                 render={({ field: { value, name, onChange } }) =>
                                     <DefaultInput
-                                        type={"Senha"}
+                                        type={"password"}
                                         inputName={name}
                                         value={value}
                                         onChange={onChange}
@@ -49,23 +64,28 @@ const Login = () => {
                                     />
                                 }
                             />
-                            <span className="forgotPassword">
-                                <a href="/recuperarSenha">Esqueci minha senha</a>
-                            </span>
-                            <button type="submit" className="btn" id="btnSignIn">
-                                Entrar
-                            </button>
-                            <div className="subscribe">
-                                <p className="content">Ainda não tem conta?</p>
-                                <a href="/cadastrar" className="linkSubscribe">Cadastre-se</a>
-                            </div>
+                            <p className="errorMessage">
+                                {errors.password?.message}
+                            </p>
                         </div>
-                    </form>
+
+                        <span className="forgotPassword">
+                            <a href="/recuperarSenha">Esqueci minha senha</a>
+                        </span>
+                        <button type="submit" className="btn" id="btnSignIn">
+                            Entrar
+                        </button>
+                        <div className="subscribe">
+                            <p className="content">Ainda não tem conta?</p>
+                            <a href="/cadastrar" className="linkSubscribe">Cadastre-se</a>
+                        </div>
+                    </div>
+                </form>
                 <div className="footerLogin">
                     <Footer />
                 </div>
-                </div>
-            </section>
+            </div>
+        </section>
     )
 }
 

@@ -21,10 +21,11 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 50px;
+    text-align: center ;
+    padding: 60px ;
     gap: 10px;
     border-radius: 5px; 
-    background-color: rgba(255, 255, 255, 0.205);
+    background-color: rgba(255, 255, 255, 0.205); 
 }
 .forgotPassword {
     margin-top: 10px;
@@ -78,6 +79,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.errorMessage{
+    width: 300px;
+    color: #df5252 ;
+    font-size: 17px;
+    text-align: center;
 }
 
 .content {

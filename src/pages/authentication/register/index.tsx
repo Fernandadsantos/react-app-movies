@@ -5,38 +5,41 @@ import Footer from "../../../components/footer";
 import './register.scss';
 import { auth } from "../../../api/firebase";
 import { updateProfile, createUserWithEmailAndPassword, User } from "firebase/auth";
- 
-import {translateErrorMessages} from '../../../utils/format'
+import { translateErrorMessages } from '../../../utils/format'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import PopupAlert from "../../../components/popupAlert"; 
+import PopupAlert from "../../../components/popupAlert";
 
 const schema = yup.object({
     name: yup.string()
-    .matches(/^[A-Za-z ]*$/, 'Por favor informe um nome válido.')
-    .max(40)
-    .required('Por favor informe um nome.'),
+        .matches(/^[A-Za-z ]*$/, 'Por favor informe um nome válido.')
+        .max(40)
+        .required('Por favor informe um nome.'),
     email: yup.string()
-    .email('Por favor informe um e-mail válido.')
-    .required('Por favor informe um e-mail.'),
+        .email('Por favor informe um e-mail válido.')
+        .required('Por favor informe um e-mail.'),
     password: yup.string()
-    .min(6, 'Crie uma senha com mínimo de 6 caracteres.')
-    .max(12, 'A senha deve conter no máximo 12 caracteres.')
-    .required('A senha deve conter entre 6 e 12 caracteres.')
+        .min(6, 'Crie uma senha com mínimo de 6 caracteres.')
+        .max(12, 'A senha deve conter no máximo 12 caracteres.')
+        .required('A senha deve conter entre 6 e 12 caracteres.')
 }).required();
 type FormData = yup.InferType<typeof schema>;
 
-interface FirebaseAuthError  {
+interface FirebaseAuthError {
     code: string;
     message: string;
 }
 
 
-const RegisterUser = () => {
-    const [messagePopup, setMessagePopup] = React.useState('')
-    const { control, handleSubmit: onSubmit, formState: {errors} } = useForm<FormData>({
+const RegisterUser = () => { 
+    const [alert, setAlert] = React.useState({
+        type: '',
+        text: '',
+        show: false
+    });
+    const { control, handleSubmit: onSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(schema)
-      });
+    });
     const handleSubmit = async (data: FormData) => {
         try {
             const { name, email, password } = data;
@@ -47,24 +50,31 @@ const RegisterUser = () => {
                     ...auth.currentUser,
                     displayName: name
                 });
-                return 
+                return
 
             }
         }
-        catch (error: any) {
-            setMessagePopup(translateErrorMessages(((error as unknown) as FirebaseAuthError ).code as string));
+        catch (error: any) { 
+            onShowAlert('erro', translateErrorMessages(((error as unknown) as FirebaseAuthError)
+            .code as string));
         }
     }
 
-    function popUp(){
-        return(
-            <div>
-                <PopupAlert message={messagePopup}/>
-            </div>
-        )
+    function onCloseAlert( ) {
+        setAlert({
+            type: '',
+            text: '',
+            show: false,
+        })
     }
+    function onShowAlert(type:string, text: string) {
+        setAlert({
+            type: type,
+            text: text,
+            show: true
+        })
 
-
+    }  
     React.useEffect(() => {
 
     }, [])
@@ -72,11 +82,12 @@ const RegisterUser = () => {
 
     return (
         <section className="formSection">
+            <PopupAlert {...alert} onClosePress={onCloseAlert}/>
             <div className="formRegister">
                 <h1 className="titleRegister">Cadastro</h1>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputs">
-                        <div className="controller"> 
+                        <div className="controller">
                             <Controller
                                 name="name"
                                 control={control}
@@ -128,7 +139,7 @@ const RegisterUser = () => {
                             <p>{errors.password?.message}</p>
                         </div>
                     </div>
-                    <button type="submit" className="btnRegister" onClick={setMessagePopup} >
+                    <button type="submit" className="btnRegister"  >
                         Cadastrar
                     </button>
                     <div className="loginRef">

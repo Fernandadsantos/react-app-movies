@@ -13,12 +13,12 @@ export interface Movie {
     video: boolean;
     vote_average: number;
     vote_count: number;
-  }
-  
+}
+
 export interface Genre {
     id: number;
-    name: string;  
-  }
+    name: string;
+}
 
 export interface ProductionCompany {
     id: number;

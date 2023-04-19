@@ -1,46 +1,32 @@
-import React from "react";
-import Alert from "react-popup-alert"; 
+import Alert from "react-popup-alert";
 
+interface PopUpProps {
+    text: string;
+    type: string;
+    show: boolean;
+    onClosePress: Function;
+}
 
+function PopupAlert({ text, type, show, onClosePress }: PopUpProps) {
 
-function PopupAlert(message: string) {
-
-    const [alert, setAlert] = React.useState({
-        type: 'error',
-        text: '',
-        show: false
-    })
-
-    function onCloseAlert() {
-        setAlert({
-            type: '',
-            text: '',
-            show: false,
-        })
-    }
-    function onShowAlert(type: string, message: string) {
-        setAlert({
-            type: type,
-            text: message,
-            show: true
-        })
-    }
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 50 }}>
-                <button onClick={() => {onShowAlert('erro', message)}}> 
-                </button>
-            </div>
             <Alert
                 header={'Header'}
                 btnText={'Close'}
-                text={alert.text}
-                type={alert.type}
-                show={alert.show}
-                onClosePress={onCloseAlert}
+                text={text}
+                type={type}
+                show={show}
+                onClosePress={onClosePress}
                 pressCloseOnOutsideClick={true}
-                showBorderBottom={true}
-                alertStyles={{}}
+                showBorderBottom={false}
+                alertStyles={{
+                    backgroundColor: 'rgba(98, 102, 101, 0.71)',
+                    borderRadius: '5px',
+                    padding: '50px',
+                    textAlign: 'center',
+                    position: 'static',  
+                }}
                 headerStyles={{}}
                 textStyles={{}}
                 buttonStyles={{}}

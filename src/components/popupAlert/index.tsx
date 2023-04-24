@@ -2,13 +2,14 @@ import React from "react";
 import Alert from "react-popup-alert";
 
 interface PopUpProps {
+    title: string;
     text: string;
     type: string;
     show: boolean;
     onClosePress: Function;
 }
 
-function PopupAlert({ text, type, show, onClosePress }: PopUpProps) {
+function PopupAlert({ text, type, show, onClosePress, title }: PopUpProps) {
 
     return ( 
         <React.Fragment>  
@@ -22,7 +23,7 @@ function PopupAlert({ text, type, show, onClosePress }: PopUpProps) {
                 backgroundColor: 'rgba(0, 0, 0, 0.5)'  
             }}>
                 <Alert
-                    header={'Não foi possível realizar o cadastro'}
+                    header={title}
                     btnText={'fechar'}
                     text={text}
                     type={type}

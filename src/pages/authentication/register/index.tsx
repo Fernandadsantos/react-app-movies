@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import PopupAlert from "../../../components/popupAlert";
+import { FirebaseAuthError } from "../../../interfaces";
 
 const schema = yup.object({
     name: yup.string()
@@ -25,11 +26,6 @@ const schema = yup.object({
         .required('A senha deve conter entre 6 e 12 caracteres.')
 }).required();
 type FormData = yup.InferType<typeof schema>;
-
-interface FirebaseAuthError {
-    code: string;
-    message: string;
-}
 
 
 const RegisterUser = () => { 
@@ -82,7 +78,7 @@ const RegisterUser = () => {
    
     return (
         <section className="formSection">
-            <PopupAlert {...alert} onClosePress={onCloseAlert}/>
+            <PopupAlert {...alert} onClosePress={onCloseAlert} title='Não foi possível realizar o cadastro'/>
             <div className="formRegister">
                 <h1 className="titleRegister">Cadastro</h1>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
@@ -144,7 +140,7 @@ const RegisterUser = () => {
                     </button>
                     <div className="loginRef">
                         <p >Já tem uma conta? </p>
-                        <a href="/login">  Acesse aqui</a>
+                        <a href="/signIn">  Acesse aqui</a>
                     </div>
                 </form>
             </div>

@@ -1,35 +1,70 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import { sendPasswordResetEmail} from "firebase/auth";
+import { FirebaseAuthError } from "../../../interfaces";
+import { auth } from "../../../api/firebase";
 import DefaultInput from "../../../components/input";
 import Footer from "../../../components/footer";
 import './recoverPassword.scss';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { translateErrorMessages } from "../../../utils/format";
+import PopupAlert from "../../../components/popupAlert";
+
 
 const schema = yup.object({
     email: yup.string()
-        .email('Por favor informe um e-mail válido.')
-        .required('Por favor informe o e-mail usado no cadastro da conta que deseja recuperar.'), 
+    .email('Por favor informe um e-mail válido.')
+    .required('Por favor informe o e-mail usado no cadastro da conta que deseja recuperar.'), 
 }).required();
 type FormData = yup.InferType<typeof schema>;
 
 const RecoverPassword = () => {
+    const [alert, setAlert] = React.useState({
+        type: '',
+        text: '',
+        show: false
+    });
+    const navigate = useNavigate();
     const { control, handleSubmit: onSubmit, formState:{errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
-    const handleSubmit = () => { }
+    const handleSubmit = async(data: FormData) => {
+        try {
+            const { email} = data;
+            await sendPasswordResetEmail( auth, email)
+            navigate("/login");
 
-    React.useEffect(() => {
+        }
+        catch (error: any) { 
+            onShowAlert('erro', translateErrorMessages(((error as unknown) as FirebaseAuthError)
+            .code as string));
+        }
+     }
+     function onCloseAlert( ) {
+        setAlert({
+            type: '',
+            text: '',
+            show: false,
+        })
+    }
+    function onShowAlert(type:string, text: string) {
+        setAlert({
+            type: type,
+            text: text,
+            show: true
+        })
 
-    }, [])
+    }
     
     return (
         <section className="formSection">
+            <PopupAlert {...alert} onClosePress={onCloseAlert} title='Não foi possível entrar'/>
             <div className="formLoginPass">
                 <h1 className="titlePass">Redefinir senha</h1>
                 <p className="inform">Informe o
-                    email usado no cadastro e lhe enviaremos um
-                    link com instruções para redefinir sua senha. </p>
+                    email usado no cadastro. </p>
                 <form onSubmit={onSubmit(handleSubmit)} className="formContent">
                     <div className="inputEmail">
                         <Controller

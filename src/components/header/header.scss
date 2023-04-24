@@ -2,15 +2,40 @@
     background-image: #000000ad;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
 .MuiAppBar-colorPrimary {
     color: #fff;
     background-color: #000000ad !important;
 }
 
 .header-title {
-    padding-left: 10px;
+    padding-left: 50px;
     text-transform: uppercase;
-    font-size: 25px;
+    font-size: 26px;
     color: #ffffff;
     letter-spacing: 2px;
+}
+
+.btnLogOut {  
+    background-color: #99919160;
+    width: 90px;
+    margin-left: 30px;
+    height: 30px;
+    border: none;
+    font-size: 15px;
+    border-radius: 10px;
+    letter-spacing: 1px;
+    cursor: pointer;
+} 
+.headerItens{
+    display: flex;
+    flex-direction: row;  
+    align-items: center;
+    gap: 5px;
 }

@@ -9,9 +9,11 @@ interface headerProps {
     title?: string;
     onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
     children?: React.ReactNode;
+    username?: string | null;
 }
 
-function Header({ title, onChange, children }: headerProps) {
+function Header({ title, onChange, children, username }: headerProps) {
+    
 
     async function logOut() {
         try {
@@ -27,16 +29,22 @@ function Header({ title, onChange, children }: headerProps) {
 
                 <div className='header'>
                     <div className="headerItens">
-                        {
-                            children ?? <Breadcrumbs >
-                                <Link underline='none' href='/' >
-                                    <span className='header-title'>{title}</span>
-                                </Link>
-                            </Breadcrumbs>
-                        }
                         <button className="btnLogOut" onClick={logOut}>
                             LogOut
                         </button>
+                        {
+                            children ?? <Breadcrumbs >
+                                <Link underline='none' href='/' >
+                                    <div className="textHeader">
+                                          <span className='header-title'>{title}</span>
+                                          <span className="header-userName">{username}</span>
+                                    </div>
+                                  
+                                    
+                                </Link>
+                            </Breadcrumbs>
+                        }
+                        
                     </div>
                     <SearchBar onChange={onChange} />
                 </div>

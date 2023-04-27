@@ -1,29 +1,24 @@
-import { Build } from "@material-ui/icons";
-import { createSlice } from "@reduxjs/toolkit";
-import { User } from "firebase/auth";
-import type { PayloadAction } from '@reduxjs/toolkit'
-
-
-export function userData(user: UserData) {
-
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import {User} from "firebase/auth";
+ 
+interface UserState  {
+    user: User | null;
 }
 
-interface UserData {
-    user: {},
-    loadingGenre: string,
-}
-
-const initialState: UserData = {
-    user: {},
-    loadingGenre: 'idle',
-}
+const initialState: UserState  = {
+    user: null,
+} 
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers:   {
+        setUser: (state, action: PayloadAction<User | null>) => {
+            state.user = action?.payload;
+        }
     }, 
 
 })
 
+export const { setUser } = userSlice.actions
 export default userSlice.reducer;

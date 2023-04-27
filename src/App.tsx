@@ -7,36 +7,33 @@ import RegisterUser from './pages/authentication/register';
 import { User, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../src/api/firebase";
 import './App.scss'; 
-import { useDispatch } from 'react-redux';
-import userSlice from './redux/slicesReducers/userSlice';
-import { getUserDate } from './redux/slicesReducers/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import  {setUser} from './redux/slicesReducers/userSlice';
 import {
   BrowserRouter,
-  createBrowserRouter,
   Route,
-  Navigate,
-  Router,
-  RouterProvider,
   Routes,
 } from "react-router-dom"; 
+import { RootState } from './redux/store';
 
 function App() {
-  const [getUser, setUser] = React.useState<User | null>(null);  
+  const dispatch = useDispatch(); 
+  const [currentUser, setCurrentUser] = React.useState<User | null>(null);
+  const {user} = useSelector((state: RootState) => state.userSlice);
 
   React.useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
+    onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) { 
+        dispatch(setUser(currentUser))
       } else {
-        setUser(null)
+        dispatch(setUser(null))
       }
     });
-  }, [])
+  }, []) 
 
-  React.useEffect(() => { 
-  },[])
-
-
+React.useEffect(()=>{
+  setCurrentUser(user);
+}, [user])
 
   return (
     <BrowserRouter>
@@ -44,7 +41,7 @@ function App() {
 
         {/* <Route path="/" element={<Loading />} /> */}
         {
-          getUser
+          currentUser
             ? <React.Fragment>
               <Route path="/" element={<Genres />} />
               <Route path="/movies" element={<Movies />} />

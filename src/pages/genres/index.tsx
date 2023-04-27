@@ -18,7 +18,6 @@ import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 
-
 interface currentPoster {
   index?: number;
   cover?: string;
@@ -38,7 +37,8 @@ interface formattedGenre extends Genre {
 
 export default function Genres() {
   const { movie, loadingMovie } = useSelector((state: RootState) => state.movieSlice);
-  const { genreList, loadingGenre } = useSelector((state: RootState) => state.genreSlice)
+  const { genreList, loadingGenre } = useSelector((state: RootState) => state.genreSlice);
+  const {user} = useSelector((state: RootState) => state.userSlice);
   const dispatch = useDispatch<ThunkDispatch<RootState, any, AnyAction>>();
   const navigate = useNavigate();
   const [listGenres, setListGenres] = React.useState<Genre[]>([]);
@@ -64,7 +64,7 @@ export default function Genres() {
   React.useEffect(() => {
     const periodicGetRandomMoviePostSubscriber = setInterval(() => {
       getRandomPoster()
-    }, 120000);
+    }, 20000);
     return () => {
       clearInterval(periodicGetRandomMoviePostSubscriber)
     };
@@ -150,7 +150,7 @@ export default function Genres() {
     <React.Fragment>
       <CssBaseline />
       <main className='mainPage'>
-        <Header title='Catalogo' onChange={searchCategory} />
+        <Header title='Catalogo' onChange={searchCategory} username={`Olá, ${user?.displayName}!`}/>
         <section className='poster-genre'>
           <Poster  {...currentMoviePoster} />
         </section>

@@ -4,8 +4,9 @@
 
 .header {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
+    justify-content: space-evenly;
+    gap: 400px;
+    padding: 15px;
     align-items: center;
 }
 
@@ -15,27 +16,75 @@
 }
 
 .header-title {
-    padding-left: 50px;
     text-transform: uppercase;
-    font-size: 26px;
+    font-size: 25px;
     color: #ffffff;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    text-align: center;
 }
 
 .btnLogOut {  
     background-color: #99919160;
-    width: 90px;
-    margin-left: 30px;
+    width: 70px;
     height: 30px;
     border: none;
-    font-size: 15px;
+    font-size: 14px;
     border-radius: 10px;
     letter-spacing: 1px;
+    text-align: center;
     cursor: pointer;
 } 
 .headerItens{
     display: flex;
     flex-direction: row;  
     align-items: center;
-    gap: 5px;
+}
+.textHeader{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header-userName{
+    font-size: 15px;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    .header-userName {
+        position: relative;
+    }
+    .headerItens{
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+    }
+    .btnLogOut {
+        text-align: center;
+        width: 60px;
+        font-size: 13px;
+    }
+  
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .header-userName {
+        width: 260px;
+        height: 35px;
+        right: 40px;
+    }
+ 
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1200px) {
+    .header-userName {
+        width: 240px;
+        height: 35px;
+        right: 60px;
+    }
+ 
 }

@@ -3,13 +3,15 @@ import genreSlice from './slicesReducers/genresSlice';
 import movieSlice from './slicesReducers/movieSlice';
 import recommendationsSlice from './slicesReducers/recommendationsSlice';
 import detailsSlice from './slicesReducers/detailsSlice';
+import userSlice from './slicesReducers/userSlice';
 
 export const store = configureStore({
   reducer: {
-   genreSlice, 
-   movieSlice,
-   recommendationsSlice,
-   detailsSlice,
+    genreSlice, 
+    movieSlice,
+    recommendationsSlice,
+    detailsSlice,
+    userSlice,
   },
 })
  

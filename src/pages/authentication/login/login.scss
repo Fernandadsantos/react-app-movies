@@ -1,0 +1,106 @@
+html,
+body {
+    background-image: url(https://assets.nflxext.com/ffe/siteui/acquisition/login/login-the-crown_2-1500x1000.jpg) ;
+    background-repeat:  no-repeat;   
+    background-attachment: fixed; 
+    background-size: cover;  
+} 
+
+.loginSection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+.login{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center ;
+    padding: 60px ;
+    gap: 10px;
+    border-radius: 5px; 
+    background-color: rgba(255, 255, 255, 0.205); 
+}
+.forgotPassword {
+    margin-top: 10px;
+    font-size: 15px;
+}
+
+.forgotPassword a {
+    color: #d6d1d1be;
+    text-decoration-color: none;
+    text-decoration: none;
+}
+.forgotPassword:hover{
+    text-decoration:underline;
+    color: #c5b8b8be;
+}
+
+.titleL{ 
+    font-size: 50px;
+    color: #f0eeee;
+    letter-spacing: 2px;
+
+}
+
+.footerLogin {   
+    bottom: 0;
+    margin-top: 70px;
+}
+
+.btn {
+    background-color: #366999;
+    font-size: 18px;
+    color: #f1ecec;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 130px;
+    height: 40px;
+    border: solid 0.1px #31303052;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.377) 0px 5px 9px;
+    letter-spacing: 1px;
+     
+} 
+.btn:active {
+    background-color: #36699996;
+    box-shadow: none; 
+}
+
+.formContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.errorMessage{
+    width: 300px;
+    color: #df5252 ;
+    font-size: 17px;
+    text-align: center;
+}
+
+.content {
+    color: #eee8e8e3;
+}
+.subscribe{ 
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    gap: 15px;
+}
+.linkSubscribe{
+    font-size: 20px;
+    color:#70a1ce;
+    text-decoration: none;
+}
+.linkSubscribe:hover{
+    text-decoration:underline;
+}

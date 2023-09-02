@@ -1,0 +1,50 @@
+.mainPage {
+  background : #141414; 
+}
+.sectionCards {
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
+.poster-genre { 
+  margin-bottom: 15px;
+}
+.btnLogin{
+  height: 25px;
+  width: 60px;
+}
+.cardGenre {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.genreImage {
+  width: 300px;
+  border: solid 0.1px #8f8a8ad8;
+  border-radius: 5px;
+}
+
+.titleContainer { 
+  background-position: center; 
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+}
+
+.cardGenreTitle {
+  position: relative;
+  top:40px;
+  left:15px;
+  border-radius: 5px;
+  background-color:rgba(0, 0, 0, 0.5); 
+  padding: 0.4px;
+  padding-left: 5.5px;
+  padding-right: 5.5px; 
+}
+ 

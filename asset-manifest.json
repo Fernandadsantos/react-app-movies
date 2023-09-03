@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/Fernandadsantos/react-app-movies/static/css/main.19351f75.css",
-    "main.js": "/Fernandadsantos/react-app-movies/static/js/main.6ada88df.js",
-    "static/js/787.70930fdb.chunk.js": "/Fernandadsantos/react-app-movies/static/js/787.70930fdb.chunk.js",
-    "static/media/defaultImg.jpeg": "/Fernandadsantos/react-app-movies/static/media/defaultImg.d5e011bc557e9c51f97b.jpeg",
-    "static/media/cinemaImg.jpeg": "/Fernandadsantos/react-app-movies/static/media/cinemaImg.65e6aab79b40cbbf81c9.jpeg",
-    "static/media/up-arrow.png": "/Fernandadsantos/react-app-movies/static/media/up-arrow.e1f248039b9675538f04.png",
-    "static/media/magnifying-glass.svg": "/Fernandadsantos/react-app-movies/static/media/magnifying-glass.db0d2fd0f82763e1d90c034a0fc28af9.svg",
-    "index.html": "/Fernandadsantos/react-app-movies/index.html",
-    "main.19351f75.css.map": "/Fernandadsantos/react-app-movies/static/css/main.19351f75.css.map",
-    "main.6ada88df.js.map": "/Fernandadsantos/react-app-movies/static/js/main.6ada88df.js.map",
-    "787.70930fdb.chunk.js.map": "/Fernandadsantos/react-app-movies/static/js/787.70930fdb.chunk.js.map"
+    "main.css": "/react-app-movies/static/css/main.19351f75.css",
+    "main.js": "/react-app-movies/static/js/main.7c3cad4a.js",
+    "static/js/787.70930fdb.chunk.js": "/react-app-movies/static/js/787.70930fdb.chunk.js",
+    "static/media/defaultImg.jpeg": "/react-app-movies/static/media/defaultImg.d5e011bc557e9c51f97b.jpeg",
+    "static/media/cinemaImg.jpeg": "/react-app-movies/static/media/cinemaImg.65e6aab79b40cbbf81c9.jpeg",
+    "static/media/up-arrow.png": "/react-app-movies/static/media/up-arrow.e1f248039b9675538f04.png",
+    "static/media/magnifying-glass.svg": "/react-app-movies/static/media/magnifying-glass.db0d2fd0f82763e1d90c034a0fc28af9.svg",
+    "index.html": "/react-app-movies/index.html",
+    "main.19351f75.css.map": "/react-app-movies/static/css/main.19351f75.css.map",
+    "main.7c3cad4a.js.map": "/react-app-movies/static/js/main.7c3cad4a.js.map",
+    "787.70930fdb.chunk.js.map": "/react-app-movies/static/js/787.70930fdb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.19351f75.css",
-    "static/js/main.6ada88df.js"
+    "static/js/main.7c3cad4a.js"
   ]
 }

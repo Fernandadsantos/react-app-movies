@@ -30,7 +30,7 @@ function Header({ title, onChange, children, username }: headerProps) {
                 <div className='header'>
                     <div className="headerItens">
                         <button className="btnLogOut" onClick={logOut}>
-                            LogOut
+                            Sair
                         </button>
                         {
                             children ?? <Breadcrumbs >

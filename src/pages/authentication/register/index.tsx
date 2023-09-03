@@ -140,7 +140,7 @@ const RegisterUser = () => {
                     </button>
                     <div className="loginRef">
                         <p >Já tem uma conta? </p>
-                        <a href="/signIn">  Acesse aqui</a>
+                        <a href="/">  Acesse aqui</a>
                     </div>
                 </form>
             </div>
